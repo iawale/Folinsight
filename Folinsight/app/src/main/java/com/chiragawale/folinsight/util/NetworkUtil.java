@@ -20,14 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NetworkUtil {
+public  class NetworkUtil {
     private final static String LOG_TAG = NetworkUtil.class.getSimpleName();
     /**
      *
      * @param url The url that returns the JSON data of the users follower list
      * @return  list of followers extracted from the response from the server
      */
-    List<Follower> fetchFollowerList(String url){
+    public static List<Follower> fetchFollowerList(String url){
         URL followerDataUrl = createUrl(url);
         String jsonResponse = "";
         try {
@@ -45,7 +45,7 @@ public class NetworkUtil {
      * @param url Url in the form of string
      * @return  Actual URL needed to connect to the server that is generated from the passed string
      */
-    URL createUrl(String url){
+    public static URL createUrl(String url){
         URL followerDataUrl = null;
         try {
             followerDataUrl = new URL(url);
@@ -60,7 +60,7 @@ public class NetworkUtil {
      * @param followerDataUrl url to connect to
      * @return JSON Reponse from server
      */
-    String makeHttpRequest(URL followerDataUrl) throws IOException {
+    public static String makeHttpRequest(URL followerDataUrl) throws IOException {
         String jSONResponse = "";
         if(followerDataUrl == null){
             return null;
@@ -99,7 +99,7 @@ public class NetworkUtil {
         return jSONResponse;
     }
     //Returns the string created from data extracted from the input stream
-    String readFromStream(InputStream inputStream) throws IOException {
+    public static String readFromStream(InputStream inputStream) throws IOException {
         if(inputStream == null){
             return "";
         }
@@ -114,7 +114,7 @@ public class NetworkUtil {
      return jsonResponse.toString();
     }
     //Returns the list with follower objects created from data exraceted from JSON response
-    List<Follower> getFollowerList(String jsonResponse){
+    private static List<Follower> getFollowerList(String jsonResponse){
         List<Follower> followerList = new ArrayList<>();
 
         try {
