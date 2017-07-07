@@ -8,4 +8,25 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="followerName">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">24sp</item>
+
+    </style>
+    <style name="followerUserName">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="followerTrackDate">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
 </resources>

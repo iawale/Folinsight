@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="Chirag Awale"
+            android:id="@+id/follower_name"
+            style="@style/followerName"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="chirag_awale"
+            style="@style/followerUserName"
+            android:id="@+id/follower_user_name"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:paddingRight="16dp"
+        android:id="@+id/follower_tracked_date"
+        style="@style/followerTrackDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        tools:text="Feb 21, 2017" />
+
+
+</LinearLayout>
