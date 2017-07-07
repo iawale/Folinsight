@@ -6,7 +6,7 @@ package com.chiragawale.folinsight.entity;
 public class Follower {
     int followerID;
     String userName,fullName,profilePictureLink;
-    String date_trackedFrom;
+    String date_trackedFrom,profileLink;
     boolean follow;
 
     public Follower(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean follow) {
@@ -16,6 +16,7 @@ public class Follower {
         this.profilePictureLink = profilePictureLink;
         this.date_trackedFrom = date_trackedFrom;
         this.follow = follow;
+        this.profileLink = "https://www.instagram.com/"+userName;
     }
 
     public Follower() {
@@ -67,5 +68,9 @@ public class Follower {
 
     public void setFollow(boolean follow) {
         this.follow = follow;
+    }
+
+    public String getProfileLink (){
+        return profileLink;
     }
 }

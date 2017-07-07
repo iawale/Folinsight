@@ -27,7 +27,9 @@
     </LinearLayout>
 
     <TextView
+        android:paddingTop="20dp"
         android:paddingRight="16dp"
+        android:paddingBottom="0dp"
         android:id="@+id/follower_tracked_date"
         style="@style/followerTrackDate"
         android:layout_width="wrap_content"

@@ -43,7 +43,7 @@ public class FollowerAdapter extends ArrayAdapter<Follower> {
         //Setting the texts of their respective textViews according to the data received from the List
         follower_name.setText(currentFollower.getFullName());
         follower_userName.setText(currentFollower.getUserName());
-        follower_track_date.setText("Feb 21, 2017");
+        follower_track_date.setText(currentFollower.getDate_trackedFrom());
 
         return listItemView;
     }

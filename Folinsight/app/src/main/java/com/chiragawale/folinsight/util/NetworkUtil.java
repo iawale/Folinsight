@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -126,7 +127,19 @@ public  class NetworkUtil {
                 String full_name = currentFollower.getString("full_name");
                 String profilePicture_link= currentFollower.getString("profile_picture");
                 int id = currentFollower.getInt("id");
-                Follower currentFollowerObject = new Follower(id,username,full_name,profilePicture_link,"",true);
+
+                //Gets the current date
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year = c.get(Calendar.YEAR);
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int min = c.get(Calendar.MINUTE);
+                String timezone = c.getTimeZone().getDisplayName();
+
+                String date = day + "/" + month + "/" + year + " "+hour+":"+min + " "+timezone;
+
+                Follower currentFollowerObject = new Follower(id,username,full_name,profilePicture_link,date,true);
                 followerList.add(currentFollowerObject);
             }
         } catch (JSONException e) {

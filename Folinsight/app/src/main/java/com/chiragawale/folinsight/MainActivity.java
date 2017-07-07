@@ -1,14 +1,19 @@
 package com.chiragawale.folinsight;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chiragawale.folinsight.entity.Follower;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +39,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Linking the adapter to the list view
         ListView listView = (ListView) findViewById(R.id.follower_list);
         listView.setAdapter(mFollowerAdapter);
+
+
+        //Setting up intent to open profile of selected user from list
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Follower selectedFollower = mFollowerAdapter.getItem(position);
+                //Converting the profile link String to URI and setting the intent up to open the URI accordingly
+                Uri uri = Uri.parse(selectedFollower.getProfileLink());
+                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                startActivity(intent);
+            }
+        });
+
 
         //Kicks off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID, null, this);
