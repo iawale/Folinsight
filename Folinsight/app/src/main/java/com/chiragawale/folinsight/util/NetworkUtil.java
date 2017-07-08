@@ -137,7 +137,7 @@ public  class NetworkUtil {
                 int min = c.get(Calendar.MINUTE);
                 String timezone = c.getTimeZone().getDisplayName();
 
-                String date = day + "/" + month + "/" + year + " "+hour+":"+min + " "+timezone;
+                String date = month + "/" + day + "/" + year + " "+hour+":"+min + " "+timezone;
 
                 Follower currentFollowerObject = new Follower(id,username,full_name,profilePicture_link,date,true);
                 followerList.add(currentFollowerObject);

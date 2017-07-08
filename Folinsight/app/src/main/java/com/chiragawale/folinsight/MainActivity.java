@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /*
     URL TO CONNECT TO, TO GET FOLLOWER DATA
      */
-    private final String FOLLOWER_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=3883966149.9708451.f09f4c2b9a014205a5d4eb91a4841226";
+    private final String FOLLOWER_DATA_URL = "";
     //Adapter for providing data to the list view
     private FollowerAdapter mFollowerAdapter;
 
