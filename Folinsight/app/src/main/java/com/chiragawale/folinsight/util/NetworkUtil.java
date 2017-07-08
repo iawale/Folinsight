@@ -43,17 +43,17 @@ public  class NetworkUtil {
 
     /**
      *
-     * @param url Url in the form of string
+     * @param request_url Url in the form of string
      * @return  Actual URL needed to connect to the server that is generated from the passed string
      */
-    public static URL createUrl(String url){
-        URL followerDataUrl = null;
+    public static URL createUrl(String request_url){
+        URL url = null;
         try {
-            followerDataUrl = new URL(url);
+            url = new URL(request_url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return followerDataUrl;
+        return url;
     }
 
     /**

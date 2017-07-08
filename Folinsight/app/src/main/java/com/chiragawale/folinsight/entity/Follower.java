@@ -7,6 +7,7 @@ public class Follower {
     int followerID;
     String userName,fullName,profilePictureLink;
     String date_trackedFrom,profileLink;
+    int likesPosted,commentsPosted;
     boolean follow;
 
     public Follower(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean follow) {
@@ -18,6 +19,7 @@ public class Follower {
         this.follow = follow;
         this.profileLink = "https://www.instagram.com/"+userName;
     }
+
 
     public Follower() {
     }
@@ -72,5 +74,21 @@ public class Follower {
 
     public String getProfileLink (){
         return profileLink;
+    }
+
+    public int getLikesPosted() {
+        return likesPosted;
+    }
+
+    public void setLikesPosted(int likesPosted) {
+        this.likesPosted = likesPosted;
+    }
+
+    public int getCommentsPosted() {
+        return commentsPosted;
+    }
+
+    public void setCommentsPosted(int commentsPosted) {
+        this.commentsPosted = commentsPosted;
     }
 }
