@@ -2,8 +2,10 @@ package com.chiragawale.folinsight.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Intent;
 
 import com.chiragawale.folinsight.entity.Follower;
+import com.chiragawale.folinsight.util.LikeDataUtil;
 import com.chiragawale.folinsight.util.NetworkUtil;
 import com.chiragawale.folinsight.util.SelfRecentMediaUtil;
 
@@ -20,11 +22,15 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
      */
     private String mFollowerDataUrl;
     private String mUserRecentMediaIdUrl;
+    private String mUserWhoLikedDataUrl;
 
     public FollowerLoader(Context context, String url) {
         super(context);
         mFollowerDataUrl = url;
-        mUserRecentMediaIdUrl = "";//API ENDPOINT TO GET MEDIA DATA
+        //API ENDPOINT TO GET MEDIA DATA
+        mUserRecentMediaIdUrl = "";
+        //API END POINT TO GET LIKE DATA
+        mUserWhoLikedDataUrl ="";
     }
 
     @Override
@@ -39,9 +45,7 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
         }
         List<Follower> followerList = NetworkUtil.fetchFollowerList(mFollowerDataUrl);
         List<String> userRecentMediaIdList = SelfRecentMediaUtil.fetechRecentMediaIdList(mUserRecentMediaIdUrl);
-
-
-
+        List<Integer> usersWhoLikedList = LikeDataUtil.fetchUsersWhoLikedData(mUserWhoLikedDataUrl);
 
 
         return followerList;

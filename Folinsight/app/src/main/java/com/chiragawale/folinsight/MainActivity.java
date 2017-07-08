@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /*
     URL TO CONNECT TO, TO GET FOLLOWER DATA
      */
-    private final String FOLLOWER_DATA_URL = "";//API ENDPOINT TO GET FOLLOWER DATA
+    //API ENDPOINT TO GET FOLLOWER DATA
+    private final String FOLLOWER_DATA_URL = "";
     //Adapter for providing data to the list view
     private FollowerAdapter mFollowerAdapter;
 
