@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class FollowerAdapter extends ArrayAdapter<Follower> {
         TextView follower_track_date = (TextView) listItemView.findViewById(R.id.follower_tracked_date);
         TextView follower_likes = (TextView) listItemView.findViewById(R.id.likes);
         TextView follower_comments = (TextView) listItemView.findViewById(R.id.comments);
-
+        ImageView follower_profile_picture = (ImageView) listItemView.findViewById(R.id.profile_picture);
 
         //Get the current follower object
         Follower currentFollower = getItem(position);
@@ -49,6 +50,7 @@ public class FollowerAdapter extends ArrayAdapter<Follower> {
         follower_track_date.setText(currentFollower.getDate_trackedFrom());
         follower_comments.setText("Comments : "+ String.valueOf(currentFollower.getCommentsPosted()));
         follower_likes.setText("Likes : " + String.valueOf(currentFollower.getLikesPosted()));
+
 
         return listItemView;
     }

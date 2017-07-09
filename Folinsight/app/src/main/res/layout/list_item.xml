@@ -5,9 +5,19 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp">
-
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/profile_picture"
+            />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
@@ -24,6 +34,7 @@
             style="@style/followerUserName"
             android:id="@+id/follower_user_name"/>
 
+    </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,8 +54,9 @@
             android:id="@+id/comments"/>
 
 
-        <TextView
-        android:paddingTop="20dp"
+
+    </LinearLayout>
+    <TextView
         android:paddingRight="16dp"
         android:paddingBottom="0dp"
         android:id="@+id/follower_tracked_date"
@@ -53,7 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         tools:text="Feb 21, 2017" />
-    </LinearLayout>
 
 
 </LinearLayout>

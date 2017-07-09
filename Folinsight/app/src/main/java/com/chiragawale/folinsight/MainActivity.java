@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.chiragawale.folinsight.entity.Follower;
 import com.chiragawale.folinsight.loader.FollowerLoader;
@@ -23,11 +24,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     //Loader Id for follower loader
     private final static int FOLLOWER_LOADER_ID = 0;
-
+    private  ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Progress bar
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         //Initializing the adapter with null list
         mFollowerAdapter = new FollowerAdapter(this, new ArrayList<Follower>());
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //When the loader is created
     @Override
     public Loader<List<Follower>> onCreateLoader(int id, Bundle args) {
+        progressBar.setVisibility(View.VISIBLE);
         return new FollowerLoader(this);
     }
 
@@ -64,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<Follower>> loader, List<Follower> data) {
         mFollowerAdapter.clear();
-
         mFollowerAdapter.addAll(data);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     //When the loader is reset

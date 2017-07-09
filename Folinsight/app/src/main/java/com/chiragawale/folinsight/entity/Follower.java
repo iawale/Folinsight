@@ -1,14 +1,18 @@
 package com.chiragawale.folinsight.entity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 /**
  * Entity Class for Follower Details
  */
 public class Follower {
-    int followerID;
-    String userName,fullName,profilePictureLink;
-    String date_trackedFrom,profileLink;
-    int likesPosted,commentsPosted;
-    boolean follow;
+    private int followerID;
+    private String userName,fullName,profilePictureLink;
+    private String date_trackedFrom,profileLink;
+    private int likesPosted,commentsPosted;
+    private boolean follow;
+
 
     public Follower(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean follow) {
         this.followerID = followerID;
@@ -91,4 +95,10 @@ public class Follower {
     public void setCommentsPosted(int commentsPosted) {
         this.commentsPosted = commentsPosted;
     }
+
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
+    }
+
+
 }

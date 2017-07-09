@@ -11,4 +11,11 @@
         android:id="@+id/follower_list"
         />
 
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/progress_bar"
+        android:layout_centerInParent="true"
+        />
+
 </RelativeLayout>
