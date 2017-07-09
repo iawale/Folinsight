@@ -17,11 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Follower>> {
-    /*
-    URL TO CONNECT TO, TO GET FOLLOWER DATA
-     */
-    //API ENDPOINT TO GET FOLLOWER DATA
-    private final String FOLLOWER_DATA_URL = "";
+
     //Adapter for providing data to the list view
     private FollowerAdapter mFollowerAdapter;
 
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //When the loader is created
     @Override
     public Loader<List<Follower>> onCreateLoader(int id, Bundle args) {
-        return new FollowerLoader(this, FOLLOWER_DATA_URL);
+        return new FollowerLoader(this);
     }
 
     //When the loader is done loading the data

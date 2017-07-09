@@ -36,14 +36,19 @@ public class FollowerAdapter extends ArrayAdapter<Follower> {
         TextView follower_name = (TextView) listItemView.findViewById(R.id.follower_name);
         TextView follower_userName = (TextView) listItemView.findViewById(R.id.follower_user_name);
         TextView follower_track_date = (TextView) listItemView.findViewById(R.id.follower_tracked_date);
+        TextView follower_likes = (TextView) listItemView.findViewById(R.id.likes);
+        TextView follower_comments = (TextView) listItemView.findViewById(R.id.comments);
+
 
         //Get the current follower object
         Follower currentFollower = getItem(position);
 
         //Setting the texts of their respective textViews according to the data received from the List
         follower_name.setText(currentFollower.getFullName());
-        follower_userName.setText(currentFollower.getUserName() + currentFollower.getFollowerID());
+        follower_userName.setText(currentFollower.getUserName());
         follower_track_date.setText(currentFollower.getDate_trackedFrom());
+        follower_comments.setText("Comments : 5");
+        follower_likes.setText("Likes : " + String.valueOf(currentFollower.getLikesPosted()));
 
         return listItemView;
     }

@@ -25,8 +25,25 @@
             android:id="@+id/follower_user_name"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="vertical">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Likes : 45"
+            android:id="@+id/likes"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Comments : 35"
+            android:id="@+id/comments"/>
+
+
+        <TextView
         android:paddingTop="20dp"
         android:paddingRight="16dp"
         android:paddingBottom="0dp"
@@ -36,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         tools:text="Feb 21, 2017" />
+    </LinearLayout>
 
 
 </LinearLayout>
