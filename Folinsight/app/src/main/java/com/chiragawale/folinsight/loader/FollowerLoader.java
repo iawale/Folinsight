@@ -8,6 +8,7 @@ import android.util.Log;
 import com.chiragawale.folinsight.Keys;
 import com.chiragawale.folinsight.entity.Follower;
 import com.chiragawale.folinsight.util.CommentDataUtil;
+import com.chiragawale.folinsight.util.FollowerDataUtil;
 import com.chiragawale.folinsight.util.LikeDataUtil;
 import com.chiragawale.folinsight.util.NetworkUtil;
 import com.chiragawale.folinsight.util.SelfRecentMediaUtil;
@@ -45,22 +46,30 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
         if (FOLLOWER_DATA_URL == null) {
             return null;
         }
-        followerList = NetworkUtil.fetchFollowerList(FOLLOWER_DATA_URL);
-
+        //Returns list of followers
+        followerList = FollowerDataUtil.fetchFollowerList(FOLLOWER_DATA_URL);
+        //Returns List of recent-self posted media Ids
         List<String> userRecentMediaIdList = SelfRecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
-
+        //Scans for likes and comments from followers and adds them to their respective follower objects respectively
         scanMediaForLikesAndComments(userRecentMediaIdList);
-
+        //Returns Fully processed follower list
         return followerList;
     }
 
+    //Processes like and comments from the each post and updates their respective follower object data
     private void scanMediaForLikesAndComments (List<String> userRecentMediaList){
-        String mUserWhoLikedDataUrl;
-        String mUserWhoCommentedUrl;
+        String mUserWhoLikedDataUrl;//For url for getting likes data from instagram api
+        String mUserWhoCommentedUrl;//For url for getting comment data from instagram api
+
+        //Goes through every post user has posted to scan for likes and comments from followers
         for(int i = 0; i < userRecentMediaList.size();i++) {
+
+           //Url according to each post with media id
             mUserWhoLikedDataUrl = "https://api.instagram.com/v1/media/"+userRecentMediaList.get(i)+
             "/likes?access_token="+Keys.ACCESS_TOKEN;
             List<Integer> usersWhoLikedList = LikeDataUtil.fetchUsersWhoLikedData(mUserWhoLikedDataUrl);
+
+            //Builds url for each post with media id
             mUserWhoCommentedUrl = "https://api.instagram.com/v1/media/"+userRecentMediaList.get(i)+
                    "/comments?access_token="+Keys.ACCESS_TOKEN;
             List<Integer> usersWhoCommentedList = CommentDataUtil.fetchUsersWhoCommentedData(mUserWhoCommentedUrl);
