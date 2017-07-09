@@ -47,7 +47,7 @@ public class FollowerAdapter extends ArrayAdapter<Follower> {
         follower_name.setText(currentFollower.getFullName());
         follower_userName.setText(currentFollower.getUserName());
         follower_track_date.setText(currentFollower.getDate_trackedFrom());
-        follower_comments.setText("Comments : 5");
+        follower_comments.setText("Comments : "+ String.valueOf(currentFollower.getCommentsPosted()));
         follower_likes.setText("Likes : " + String.valueOf(currentFollower.getLikesPosted()));
 
         return listItemView;

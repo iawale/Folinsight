@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.chiragawale.folinsight.Keys;
 import com.chiragawale.folinsight.entity.Follower;
+import com.chiragawale.folinsight.util.CommentDataUtil;
 import com.chiragawale.folinsight.util.LikeDataUtil;
 import com.chiragawale.folinsight.util.NetworkUtil;
 import com.chiragawale.folinsight.util.SelfRecentMediaUtil;
@@ -48,23 +49,28 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
 
         List<String> userRecentMediaIdList = SelfRecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
 
-        scanMediaForLikes(userRecentMediaIdList);
+        scanMediaForLikesAndComments(userRecentMediaIdList);
 
         return followerList;
     }
 
-    private void scanMediaForLikes(List<String> userRecentMediaList){
+    private void scanMediaForLikesAndComments (List<String> userRecentMediaList){
         String mUserWhoLikedDataUrl;
+        String mUserWhoCommentedUrl;
         for(int i = 0; i < userRecentMediaList.size();i++) {
             mUserWhoLikedDataUrl = "https://api.instagram.com/v1/media/"+userRecentMediaList.get(i)+
             "/likes?access_token="+Keys.ACCESS_TOKEN;
             List<Integer> usersWhoLikedList = LikeDataUtil.fetchUsersWhoLikedData(mUserWhoLikedDataUrl);
-            processLikes(usersWhoLikedList);
+            mUserWhoCommentedUrl = "https://api.instagram.com/v1/media/"+userRecentMediaList.get(i)+
+                   "/comments?access_token="+Keys.ACCESS_TOKEN;
+            List<Integer> usersWhoCommentedList = CommentDataUtil.fetchUsersWhoCommentedData(mUserWhoCommentedUrl);
+
+            processLikesAndComments(usersWhoLikedList,usersWhoCommentedList);
         }
     }
 
-    private void processLikes(List<Integer> usersWhoLikedList) {
-        //Compares the user ID of the users who liked the post to see if he/she is in follower list and adds follower list data
+    private void processLikesAndComments(List<Integer> usersWhoLikedList,List<Integer> usersWhoCommentedList) {
+        //Compares the user ID of the users who liked the post to see if he/she is in follower list and adds likes to follower object
         for (int i = 0; i < usersWhoLikedList.size(); i++) {
             for (int j = 0; j < followerList.size(); j++) {
                 if (usersWhoLikedList.get(i)==followerList.get(j).getFollowerID()) {
@@ -72,5 +78,16 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
                 }
             }
         }
+
+        //Compares the user ID of the users who commented on the posts to see if he/she is in follower list and adds comment number to follower object
+        for (int i = 0; i < usersWhoCommentedList.size(); i++) {
+            for (int j = 0; j < followerList.size(); j++) {
+                if (usersWhoCommentedList.get(i)==followerList.get(j).getFollowerID()) {
+                    followerList.get(j).setCommentsPosted(followerList.get(j).getCommentsPosted()+1);
+                }
+            }
+        }
+
+
     }
 }
