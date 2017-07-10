@@ -2,27 +2,15 @@ package com.chiragawale.folinsight.loader;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 
-import com.chiragawale.folinsight.Keys;
-import com.chiragawale.folinsight.MainActivity;
+import com.chiragawale.folinsight.Keys_Access;
 import com.chiragawale.folinsight.entity.Follower;
 import com.chiragawale.folinsight.util.CommentDataUtil;
 import com.chiragawale.folinsight.util.FollowerDataUtil;
 import com.chiragawale.folinsight.util.LikeDataUtil;
-import com.chiragawale.folinsight.util.NetworkUtil;
 import com.chiragawale.folinsight.util.SelfRecentMediaUtil;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -34,9 +22,9 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
      URL TO CONNECT TO, TO GET FOLLOWER DATA
       */
     //API ENDPOINT TO GET FOLLOWER DATA
-    private final String FOLLOWER_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=" + Keys.getAccessToken();
+    private final String FOLLOWER_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=" + Keys_Access.getAccessToken();
     //API ENDPOINT TO GET MEDIA DATA
-    private final String RECENT_MEDIA_URL = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + Keys.getAccessToken();
+    private final String RECENT_MEDIA_URL = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + Keys_Access.getAccessToken();
     ;
 
 
@@ -78,13 +66,13 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
 
             //Url according to each post with media id
             mUserWhoLikedDataUrl = "https://api.instagram.com/v1/media/" + userRecentMediaList.get(i) +
-                    "/likes?access_token=" + Keys.getAccessToken();
+                    "/likes?access_token=" + Keys_Access.getAccessToken();
             //get the list of users who commented
             List<Integer> usersWhoLikedList = LikeDataUtil.fetchUsersWhoLikedData(mUserWhoLikedDataUrl);
 
             //Builds url for each post with media id
             mUserWhoCommentedUrl = "https://api.instagram.com/v1/media/" + userRecentMediaList.get(i) +
-                    "/comments?access_token=" + Keys.getAccessToken();
+                    "/comments?access_token=" + Keys_Access.getAccessToken();
 
             //Get the list of users who commented
             List<Integer> usersWhoCommentedList = CommentDataUtil.fetchUsersWhoCommentedData(mUserWhoCommentedUrl);

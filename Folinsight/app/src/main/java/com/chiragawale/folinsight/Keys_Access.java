@@ -4,7 +4,7 @@ package com.chiragawale.folinsight;
  * Created by chira on 7/9/2017.
  */
 
-public class Keys {
+public class Keys_Access {
     private static String ACCESS_TOKEN = "";
     private final static String REDIRECT_URI = "http://localhost/";
     private final static String CLIENT_ID = "97084514ee1c49e98560e34670d574a8";
@@ -20,7 +20,7 @@ public class Keys {
         ACCESS_TOKEN = accessToken;
 
     }
-
+    //returns the built url for requesting access token from Instagram
     public static String getAccessRequestUri() {
         return  BASE_FOR_REQUEST_URI +
                 "?client_id="+CLIENT_ID+
