@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        Keys.setAccessToken("3883966149.9708451.f09f4c2b9a014205a5d4eb91a4841226");
+        Keys.setAccessToken("");
 
         //Kicks off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID, null, this);
