@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chiragawale.folinsight.entity.Follower;
 
 import java.util.List;
@@ -50,7 +51,8 @@ public class FollowerAdapter extends ArrayAdapter<Follower> {
         follower_track_date.setText(currentFollower.getDate_trackedFrom());
         follower_comments.setText("Comments : "+ String.valueOf(currentFollower.getCommentsPosted()));
         follower_likes.setText("Likes : " + String.valueOf(currentFollower.getLikesPosted()));
-
+        //Loads images from instagram site
+        Glide.with(getContext()).load(currentFollower.getProfilePictureLink()).skipMemoryCache(true).override(144,144).into(follower_profile_picture);
 
         return listItemView;
     }
