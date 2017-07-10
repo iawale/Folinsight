@@ -1,12 +1,15 @@
 package com.chiragawale.folinsight;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -53,10 +56,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        Keys.setAccessToken("3883966149.9708451.f09f4c2b9a014205a5d4eb91a4841226");
 
         //Kicks off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID, null, this);
     }
+
 
     //When the loader is created
     @Override
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //When the loader is done loading the data
     @Override
     public void onLoadFinished(Loader<List<Follower>> loader, List<Follower> data) {
+        Log.w("LOADER FINSIHED LOADING","");
         mFollowerAdapter.clear();
         mFollowerAdapter.addAll(data);
         progressBar.setVisibility(View.INVISIBLE);
@@ -79,4 +85,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mFollowerAdapter.clear();
     }
+
+
+
 }

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.chiragawale.folinsight.Keys;
+import com.chiragawale.folinsight.MainActivity;
 import com.chiragawale.folinsight.entity.Follower;
 import com.chiragawale.folinsight.util.CommentDataUtil;
 import com.chiragawale.folinsight.util.FollowerDataUtil;
@@ -33,9 +34,9 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
      URL TO CONNECT TO, TO GET FOLLOWER DATA
       */
     //API ENDPOINT TO GET FOLLOWER DATA
-    private final String FOLLOWER_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=" + Keys.ACCESS_TOKEN;
+    private final String FOLLOWER_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=" + Keys.getAccessToken();
     //API ENDPOINT TO GET MEDIA DATA
-    private final String RECENT_MEDIA_URL = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + Keys.ACCESS_TOKEN;
+    private final String RECENT_MEDIA_URL = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + Keys.getAccessToken();
     ;
 
 
@@ -77,13 +78,13 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
 
             //Url according to each post with media id
             mUserWhoLikedDataUrl = "https://api.instagram.com/v1/media/" + userRecentMediaList.get(i) +
-                    "/likes?access_token=" + Keys.ACCESS_TOKEN;
+                    "/likes?access_token=" + Keys.getAccessToken();
             //get the list of users who commented
             List<Integer> usersWhoLikedList = LikeDataUtil.fetchUsersWhoLikedData(mUserWhoLikedDataUrl);
 
             //Builds url for each post with media id
             mUserWhoCommentedUrl = "https://api.instagram.com/v1/media/" + userRecentMediaList.get(i) +
-                    "/comments?access_token=" + Keys.ACCESS_TOKEN;
+                    "/comments?access_token=" + Keys.getAccessToken();
 
             //Get the list of users who commented
             List<Integer> usersWhoCommentedList = CommentDataUtil.fetchUsersWhoCommentedData(mUserWhoCommentedUrl);
@@ -113,4 +114,5 @@ public class FollowerLoader extends AsyncTaskLoader<List<Follower>> {
             }
         }
     }
+
 }
