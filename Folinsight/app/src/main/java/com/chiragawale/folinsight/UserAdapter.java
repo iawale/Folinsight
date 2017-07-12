@@ -16,11 +16,11 @@ import java.util.List;
 
 
 
-public class FollowerAdapter extends ArrayAdapter<Follower> {
+public class UserAdapter extends ArrayAdapter<Follower> {
     /*
     Constructor
      */
-    public FollowerAdapter(Context context, List<Follower> followerList) {
+    public UserAdapter(Context context, List<Follower> followerList) {
         super(context, 0,followerList);
     }
 

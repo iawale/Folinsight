@@ -25,7 +25,7 @@ public class AuthWebViewClient extends WebViewClient {
             Log.e("AUTH WEB VIEW CLIENT ",request_token);
             Keys_Access.setAccessToken(request_token);
             if(request_token!=null) {
-                //Opens the main activity 
+                //Opens the main activity
                 Intent mainActivity = new Intent(view.getContext(), MainActivity.class);
                 view.getContext().startActivity(mainActivity);
                 Log.e("FINISHED", "LOGGED IN");
