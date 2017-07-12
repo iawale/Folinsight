@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-
+        Log.w("Main Activity","Logged in" + Keys_Access.getAccessToken());
 
         //Kicks off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID, null, this);

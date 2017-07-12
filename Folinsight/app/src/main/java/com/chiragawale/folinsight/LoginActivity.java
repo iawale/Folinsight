@@ -34,8 +34,9 @@ public class LoginActivity extends AppCompatActivity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.setWebViewClient(new AuthWebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
+        //Logs out of instagram first
+        webView.loadUrl("https://www.instagram.com/accounts/logout");
 
-        webView.loadUrl(Keys_Access.getAccessRequestUri());
 
     }
 
