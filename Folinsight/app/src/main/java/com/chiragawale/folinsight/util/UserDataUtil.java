@@ -1,5 +1,8 @@
 package com.chiragawale.folinsight.util;
 
+import android.util.Log;
+
+import com.chiragawale.folinsight.GlobalVar;
 import com.chiragawale.folinsight.entity.Users;
 
 import org.json.JSONArray;
@@ -25,11 +28,13 @@ public class UserDataUtil extends NetworkUtil {
      * @return  list of followers extracted from the response from the server
      */
     public static List<Users> fetchUserList(String url){
-        if(url.toLowerCase().contains("follows")){
+        if(url.equalsIgnoreCase(GlobalVar.FOLLOWS_DATA_URL)){
             follows = true;
+            followedBy = false;
         }
-        if(url.toLowerCase().contains("followed-by")){
+        if(url.equalsIgnoreCase(GlobalVar.FOLLOWED_BY_DATA_URL)){
             followedBy = true;
+            follows= false;
         }
 
         URL followerDataUrl = createUrl(url);
@@ -39,6 +44,7 @@ public class UserDataUtil extends NetworkUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         List<Users> usersList = getUserList(jsonResponse);
 
         return usersList;
