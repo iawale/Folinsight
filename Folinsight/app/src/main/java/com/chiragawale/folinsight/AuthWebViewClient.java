@@ -12,19 +12,19 @@ import android.webkit.WebViewClient;
 public class AuthWebViewClient extends WebViewClient {
     private String request_token = null;
 
-   //Overrides what the webview does when loading a url ( To obtain access token redirected by instagram api)
+    //Overrides what the webview does when loading a url ( To obtain access token redirected by instagram api)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         view.clearCache(true);
 
-       //Extracts access token from the redirected URI
-            if (url.startsWith(Keys_Access.getRedirectUri())) {
+        //Extracts access token from the redirected URI
+        if (url.startsWith(Keys_Access.getRedirectUri())) {
             System.out.println(url);
             String parts[] = url.split("=");
-            request_token = parts[1];  //This is your request token.
-            Log.e("AUTH WEB VIEW CLIENT ",request_token);
+            request_token = parts[1];
+            //Sets the access token to a global variable for use later
             Keys_Access.setAccessToken(request_token);
-            if(request_token!=null) {
+            if (request_token != null) {
                 //Opens the main activity
                 Intent mainActivity = new Intent(view.getContext(), MainActivity.class);
                 view.getContext().startActivity(mainActivity);
@@ -39,7 +39,7 @@ public class AuthWebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         //Extracts access token from the redirected URI
         //If the user is not logged in, it redirects to login page
-        if(!url.contains("token")){
+        if (!url.contains("token")) {
             view.loadUrl(Keys_Access.getAccessRequestUri());
         }
     }

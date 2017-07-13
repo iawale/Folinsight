@@ -65,7 +65,8 @@ public class FollowedByFragment extends Fragment implements LoaderManager.Loader
         });
 
 
-        Log.w("Followed By Activity","Logged in" + Keys_Access.getAccessToken());
+
+        //Kicks off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
 
 

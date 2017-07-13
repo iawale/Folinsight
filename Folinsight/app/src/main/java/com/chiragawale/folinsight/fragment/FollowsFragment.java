@@ -66,7 +66,7 @@ public class FollowsFragment extends Fragment implements LoaderManager.LoaderCal
         });
 
 
-        Log.w("Follows Fragment","Logged in" + Keys_Access.getAccessToken());
+        //Kicks off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
 
 
