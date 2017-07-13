@@ -1,8 +1,6 @@
-package com.chiragawale.folinsight;
-
+package com.chiragawale.folinsight.fragment;
 
 import android.content.Intent;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,18 +14,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.chiragawale.folinsight.GlobalVar;
+import com.chiragawale.folinsight.Keys_Access;
+import com.chiragawale.folinsight.R;
+import com.chiragawale.folinsight.UserAdapter;
 import com.chiragawale.folinsight.entity.Users;
-import com.chiragawale.folinsight.loader.UserLoader;
 import com.chiragawale.folinsight.loader.UserLoaderLocal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chira on 7/12/2017.
+ * Created by chira on 7/13/2017.
  */
 
-public class FollowsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Users>> {
+public class MutualFragment extends Fragment implements LoaderManager.LoaderCallbacks <List<Users>>{
     //Adapter for providing data to the list view
     private UserAdapter mUserAdapter;
 
@@ -35,7 +36,7 @@ public class FollowsFragment extends Fragment implements LoaderManager.LoaderCal
     private final static int FOLLOWER_LOADER_ID = 1;
     private ProgressBar progressBar;
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_user_list,container,false);
 
         //Progress bar
@@ -62,7 +63,8 @@ public class FollowsFragment extends Fragment implements LoaderManager.LoaderCal
         });
 
 
-        Log.w("Follows Fragment","Logged in" + Keys_Access.getAccessToken());
+        Log.w("Mutual By Activity","");
+        //Kick off the loader
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
 
 
@@ -74,7 +76,7 @@ public class FollowsFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public Loader<List<Users>> onCreateLoader(int id, Bundle args) {
         progressBar.setVisibility(View.VISIBLE);
-        return new UserLoaderLocal(getActivity(),GlobalVar.FOLLOWS_FRAGMENT);
+        return new UserLoaderLocal(getActivity(), GlobalVar.MUTUAL_FRAGMENT);
     }
 
     //When the loader is done loading the data
@@ -88,7 +90,6 @@ public class FollowsFragment extends Fragment implements LoaderManager.LoaderCal
     //When the loader is reset
     @Override
     public void onLoaderReset(Loader<List<Users>> loader) {
-
         mUserAdapter.clear();
     }
 }

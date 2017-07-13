@@ -15,6 +15,7 @@ public class UserDaoImpl implements UserDao {
     private List<Users> userList = new ArrayList<>();
     private List<Users> followsList = new ArrayList<>();
     private List<Users> followedByList = new ArrayList<>();
+    private List<Users> mutualList = new ArrayList<>();
 
     //Sets up the lists with data loaded from Instagram Api
     @Override
@@ -41,6 +42,12 @@ public class UserDaoImpl implements UserDao {
         return followedByList;
     }
 
+    //Return mutual follow list
+    @Override
+    public List<Users> getMutualList() {
+        return mutualList;
+    }
+
     //Clears lists
     @Override
     public void clearUserList() {
@@ -55,6 +62,7 @@ public class UserDaoImpl implements UserDao {
             if(u.isFollows() && u.isFollowedBy()){
                 followedByList.add(u);
                 followsList.add(u);
+                mutualList.add(u);
             }else if(u.isFollowedBy()){
                 followedByList.add(u);
             }else if(u.isFollows()){

@@ -5,6 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.chiragawale.folinsight.fragment.FollowedByFragment;
+import com.chiragawale.folinsight.fragment.FollowsFragment;
+import com.chiragawale.folinsight.fragment.MutualFragment;
+import com.chiragawale.folinsight.fragment.OverviewFragment;
+
 /**
  * Created by chira on 7/12/2017.
  */
@@ -14,7 +19,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter{
 
  * For the names of the tabs
  */
-private String tabTitles[] = new String[] { "Overview","Followers", "Follows"};
+private String tabTitles[] = new String[] { "Overview","Mutual","Followers", "Follows"};
     private Context mcontext;
     public SimpleFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -32,6 +37,8 @@ private String tabTitles[] = new String[] { "Overview","Followers", "Follows"};
         if(position == 0){
             return new OverviewFragment();
         }else if (position == 1){
+            return new MutualFragment();
+        }else if (position == 2){
             return new FollowedByFragment();
         }else{
             return new FollowsFragment();
@@ -45,7 +52,7 @@ private String tabTitles[] = new String[] { "Overview","Followers", "Follows"};
      */
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     /**

@@ -29,10 +29,16 @@ public class UserLoaderLocal extends AsyncTaskLoader<List<Users>> {
     @Override
     public List<Users> loadInBackground() {
         Log.w("Local loader called by ", activity_id + "======================================");
+
         if(activity_id == GlobalVar.FOLLOWED_BY_FRAGMENT) {
+            //Returns followed-by user list if request is made form FollowedByFragment
             return GlobalVar.userDao.getFollowedByList();
-        }else {
+        }else if(activity_id==GlobalVar.FOLLOWS_FRAGMENT) {
+            //Returns follows user list if request is made form FollowsFragment
             return GlobalVar.userDao.getFollowsList();
+        }else{
+            //Returns mutual follow user list if request is made form Mutual
+            return GlobalVar.userDao.getMutualList();
         }
     }
 }

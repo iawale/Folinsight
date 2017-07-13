@@ -1,7 +1,8 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.fragment;
 
 
 import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.chiragawale.folinsight.GlobalVar;
+import com.chiragawale.folinsight.Keys_Access;
+import com.chiragawale.folinsight.R;
+import com.chiragawale.folinsight.UserAdapter;
 import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.loader.UserLoader;
 import com.chiragawale.folinsight.loader.UserLoaderLocal;
@@ -26,7 +31,7 @@ import java.util.List;
  * Created by chira on 7/12/2017.
  */
 
-public class FollowedByFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Users>> {
+public class FollowsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Users>> {
     //Adapter for providing data to the list view
     private UserAdapter mUserAdapter;
 
@@ -61,7 +66,7 @@ public class FollowedByFragment extends Fragment implements LoaderManager.Loader
         });
 
 
-        Log.w("Followed By Activity","Logged in" + Keys_Access.getAccessToken());
+        Log.w("Follows Fragment","Logged in" + Keys_Access.getAccessToken());
         getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
 
 
@@ -73,7 +78,7 @@ public class FollowedByFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<List<Users>> onCreateLoader(int id, Bundle args) {
         progressBar.setVisibility(View.VISIBLE);
-        return new UserLoaderLocal(getActivity(),GlobalVar.FOLLOWED_BY_FRAGMENT);
+        return new UserLoaderLocal(getActivity(), GlobalVar.FOLLOWS_FRAGMENT);
     }
 
     //When the loader is done loading the data
@@ -87,6 +92,7 @@ public class FollowedByFragment extends Fragment implements LoaderManager.Loader
     //When the loader is reset
     @Override
     public void onLoaderReset(Loader<List<Users>> loader) {
+
         mUserAdapter.clear();
     }
 }

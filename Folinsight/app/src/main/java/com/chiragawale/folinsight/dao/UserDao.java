@@ -14,4 +14,5 @@ public interface UserDao {
     List<Users> getUserList();
     List<Users> getFollowsList();
     List<Users> getFollowedByList();
+    List<Users> getMutualList();
 }
