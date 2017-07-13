@@ -9,10 +9,12 @@ import android.support.v4.app.FragmentPagerAdapter;
  * Created by chira on 7/12/2017.
  */
 
-public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter{/**
+public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter{
+    /**
+
  * For the names of the tabs
  */
-private String tabTitles[] = new String[] { "Followers", "Followed"};
+private String tabTitles[] = new String[] { "Overview","Followers", "Followed"};
     private Context mcontext;
     public SimpleFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -28,6 +30,8 @@ private String tabTitles[] = new String[] { "Followers", "Followed"};
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
+            return new OverviewFragment();
+        }else if (position == 1){
             return new FollowerFragment();
         }else{
             return new FollowedFragment();
@@ -41,7 +45,7 @@ private String tabTitles[] = new String[] { "Followers", "Followed"};
      */
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     /**

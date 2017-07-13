@@ -4,17 +4,18 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 /**
- * Entity Class for Follower Details
+ * Entity Class for Users Details
  */
-public class Follower {
+public class Users {
     private int followerID;
     private String userName,fullName,profilePictureLink;
     private String date_trackedFrom,profileLink;
     private int likesPosted,commentsPosted;
     private boolean follow;
+    private boolean follows;
 
 
-    public Follower(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean follow) {
+    public Users(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean follow, boolean follows) {
         this.followerID = followerID;
         this.userName = userName;
         this.fullName = fullName;
@@ -22,10 +23,11 @@ public class Follower {
         this.date_trackedFrom = date_trackedFrom;
         this.follow = follow;
         this.profileLink = "https://www.instagram.com/"+userName;
+        this.follows = follows;
     }
 
 
-    public Follower() {
+    public Users() {
     }
 
     public int getFollowerID() {
@@ -100,5 +102,11 @@ public class Follower {
         this.profileLink = profileLink;
     }
 
+    public boolean isFollows() {
+        return follows;
+    }
 
+    public void setFollows(boolean follows) {
+        this.follows = follows;
+    }
 }

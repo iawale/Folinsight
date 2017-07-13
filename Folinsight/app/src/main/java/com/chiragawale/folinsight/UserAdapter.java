@@ -6,22 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.chiragawale.folinsight.entity.Follower;
+import com.chiragawale.folinsight.entity.Users;
 
 import java.util.List;
 
 
 
-public class UserAdapter extends ArrayAdapter<Follower> {
+public class UserAdapter extends ArrayAdapter<Users> {
     /*
     Constructor
      */
-    public UserAdapter(Context context, List<Follower> followerList) {
-        super(context, 0,followerList);
+    public UserAdapter(Context context, List<Users> usersList) {
+        super(context, 0, usersList);
     }
 
     @Override
@@ -43,16 +42,16 @@ public class UserAdapter extends ArrayAdapter<Follower> {
         ImageView follower_profile_picture = (ImageView) listItemView.findViewById(R.id.profile_picture);
 
         //Get the current follower object
-        Follower currentFollower = getItem(position);
+        Users currentUsers = getItem(position);
 
         //Setting the texts of their respective textViews according to the data received from the List
-        follower_name.setText(currentFollower.getFullName());
-        follower_userName.setText(currentFollower.getUserName());
-        follower_track_date.setText(currentFollower.getDate_trackedFrom());
-        follower_comments.setText("Comments : "+ String.valueOf(currentFollower.getCommentsPosted()));
-        follower_likes.setText("Likes : " + String.valueOf(currentFollower.getLikesPosted()));
+        follower_name.setText(currentUsers.getFullName());
+        follower_userName.setText(currentUsers.getUserName());
+        follower_track_date.setText(currentUsers.getDate_trackedFrom());
+        follower_comments.setText("Comments : "+ String.valueOf(currentUsers.getCommentsPosted()));
+        follower_likes.setText("Likes : " + String.valueOf(currentUsers.getLikesPosted()));
         //Loads images from instagram site
-        Glide.with(getContext()).load(currentFollower.getProfilePictureLink()).skipMemoryCache(true).override(144,144).into(follower_profile_picture);
+        Glide.with(getContext()).load(currentUsers.getProfilePictureLink()).skipMemoryCache(true).override(144,144).into(follower_profile_picture);
 
         return listItemView;
     }

@@ -3,11 +3,9 @@ package com.chiragawale.folinsight.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
 
-import com.chiragawale.folinsight.App_Constants;
 import com.chiragawale.folinsight.Keys_Access;
-import com.chiragawale.folinsight.entity.Follower;
+import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.util.CommentDataUtil;
 import com.chiragawale.folinsight.util.FollowerDataUtil;
 import com.chiragawale.folinsight.util.LikeDataUtil;
@@ -20,7 +18,7 @@ import java.util.List;
  * Created by chira on 7/7/2017.
  */
 
-public class UserLoader extends AsyncTaskLoader<List<Follower>> {
+public class UserLoader extends AsyncTaskLoader<List<Users>> {
     /*
      URL TO CONNECT TO, TO GET FOLLOWER DATA
       */
@@ -32,12 +30,12 @@ public class UserLoader extends AsyncTaskLoader<List<Follower>> {
     private final String FOLLOWED_DATA_URL = "https://api.instagram.com/v1/users/self/follows?access_token=" + Keys_Access.getAccessToken();
     //API TO GET RECENT MEDIA OF FOLLOE
 
-    private int activity_code;
-    private List<Follower> userList;
 
-    public UserLoader(Context context, int activity_code) {
+    private List<Users> userList;
+
+    public UserLoader(Context context) {
         super(context);
-        this.activity_code = activity_code;
+
     }
 
     @Override
@@ -46,49 +44,45 @@ public class UserLoader extends AsyncTaskLoader<List<Follower>> {
     }
 
     @Override
-    public List<Follower> loadInBackground() {
+    public List<Users> loadInBackground() {
         if (FOLLOWER_DATA_URL == null) {
             return null;
         }
-        //If the loader is called by Followed activity the following executes
-        if (activity_code == App_Constants.FOLLOWED_ACTIVITY) {
-            //Returns list of users followed by the owner of access token
-            userList = FollowerDataUtil.fetchFollowerList(FOLLOWED_DATA_URL);
 
-
-
-            return userList;
-        }
-        Log.e("LOAD IN BACK GROUND", "WERROR==================");
-        //Returns list of followers
-        userList = FollowerDataUtil.fetchFollowerList(FOLLOWER_DATA_URL);
         //Returns List of recent-self posted media Ids
         List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
         //Scans for likes and comments from followers and adds them to their respective follower objects respectively
+
+        //Returns list of users followed by the owner of access token
+        List<Users> followedByUserList = FollowerDataUtil.fetchUserList(FOLLOWED_DATA_URL);
+
+
+        //Returns list of followers
+        List<Users> followsUserList = FollowerDataUtil.fetchUserList(FOLLOWER_DATA_URL);
+
+        userList = followedByUserList;
+
+        boolean isDuplicate;
+        for(int i = 0; i < followsUserList.size();i++){
+            isDuplicate = false;
+            for(int j = 0; j < userList.size();j++) {
+                if ( followsUserList.get(i).getFollowerID() == userList.get(j).getFollowerID()) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            if(!isDuplicate) {
+                userList.add(followsUserList.get(i));
+            }
+        }
+
+
         scanMediaForLikesAndComments(userRecentMediaIdList);
         //Returns Fully processed follower list
 
 
         return userList;
     }
-    /*=====================================================/
-    For prcessing information about users followed by the owner of access Token */
-    /*=====================================================*/
-    void getFollowedUserRecentMediaList(List<Follower> followedUserList){
-        for(int i = 0; i < followedUserList.size(); i++) {
-            List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
-        }
-
-    }
-
-
-
-
-
-
-    /* =======================================================*/
-    /*=====================================================*/
-
 
       /*=====================================================/
     For prcessing information about users who follow the owner of access Token */

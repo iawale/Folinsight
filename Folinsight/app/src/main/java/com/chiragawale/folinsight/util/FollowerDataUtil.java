@@ -1,6 +1,6 @@
 package com.chiragawale.folinsight.util;
 
-import com.chiragawale.folinsight.entity.Follower;
+import com.chiragawale.folinsight.entity.Users;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +17,20 @@ import java.util.List;
  */
 
 public class FollowerDataUtil extends NetworkUtil {
+    private static boolean ownerFollows = false;
+    private static boolean ownerFollowedBy = false;
     /**
      *
      * @param url The url that returns the JSON data of the users follower list
      * @return  list of followers extracted from the response from the server
      */
-    public static List<Follower> fetchFollowerList(String url){
+    public static List<Users> fetchUserList(String url){
+        if(url.toLowerCase().contains("follows")){
+            ownerFollows = true;
+        }else if(url.toLowerCase().contains("followed-by")){
+            ownerFollowedBy = true;
+        }
+
         URL followerDataUrl = createUrl(url);
         String jsonResponse = "";
         try {
@@ -30,14 +38,14 @@ public class FollowerDataUtil extends NetworkUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Follower> followerList = getFollowerList(jsonResponse);
+        List<Users> usersList = getFollowerList(jsonResponse);
 
-        return followerList;
+        return usersList;
     }
 
     //Returns the list with follower objects created from data exraceted from JSON response
-    private static List<Follower> getFollowerList(String jsonResponse){
-        List<Follower> followerList = new ArrayList<>();
+    private static List<Users> getFollowerList(String jsonResponse){
+        List<Users> usersList = new ArrayList<>();
 
         try {
             JSONObject root = new JSONObject(jsonResponse);
@@ -60,12 +68,12 @@ public class FollowerDataUtil extends NetworkUtil {
 
                 String date = month + "/" + day + "/" + year + " "+hour+":"+min + " "+timezone;
 
-                Follower currentFollowerObject = new Follower(id,username,full_name,profilePicture_link,date,true);
-                followerList.add(currentFollowerObject);
+                Users currentUsersObject = new Users(id,username,full_name,profilePicture_link,date,ownerFollowedBy,ownerFollows);
+                usersList.add(currentUsersObject);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return followerList;
+        return usersList;
     }
 }
