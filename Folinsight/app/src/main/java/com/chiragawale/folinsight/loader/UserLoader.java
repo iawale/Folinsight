@@ -3,11 +3,12 @@ package com.chiragawale.folinsight.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.chiragawale.folinsight.Keys_Access;
 import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.util.CommentDataUtil;
-import com.chiragawale.folinsight.util.FollowerDataUtil;
+import com.chiragawale.folinsight.util.UserDataUtil;
 import com.chiragawale.folinsight.util.LikeDataUtil;
 import com.chiragawale.folinsight.util.RecentMediaUtil;
 
@@ -23,13 +24,11 @@ public class UserLoader extends AsyncTaskLoader<List<Users>> {
      URL TO CONNECT TO, TO GET FOLLOWER DATA
       */
     //API ENDPOINT TO GET FOLLOWER DATA
-    private final String FOLLOWER_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=" + Keys_Access.getAccessToken();
+    private final String FOLLOWED_BY_DATA_URL = "https://api.instagram.com/v1/users/self/followed-by?access_token=" + Keys_Access.getAccessToken();
     //API ENDPOINT TO GET MEDIA DATA
     private final String RECENT_MEDIA_URL = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + Keys_Access.getAccessToken();
     //API TO GET FOLLOWED DATA
-    private final String FOLLOWED_DATA_URL = "https://api.instagram.com/v1/users/self/follows?access_token=" + Keys_Access.getAccessToken();
-    //API TO GET RECENT MEDIA OF FOLLOE
-
+    private final String FOLLOWS_DATA_URL = "https://api.instagram.com/v1/users/self/follows?access_token=" + Keys_Access.getAccessToken();
 
     private List<Users> userList;
 
@@ -45,24 +44,21 @@ public class UserLoader extends AsyncTaskLoader<List<Users>> {
 
     @Override
     public List<Users> loadInBackground() {
-        if (FOLLOWER_DATA_URL == null) {
-            return null;
-        }
+        Log.e("Loader called ", "=======================================================");
 
         //Returns List of recent-self posted media Ids
         List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
         //Scans for likes and comments from followers and adds them to their respective follower objects respectively
 
         //Returns list of users followed by the owner of access token
-        List<Users> followedByUserList = FollowerDataUtil.fetchUserList(FOLLOWED_DATA_URL);
-
-
-        //Returns list of followers
-        List<Users> followsUserList = FollowerDataUtil.fetchUserList(FOLLOWER_DATA_URL);
-
+        List<Users> followedByUserList = UserDataUtil.fetchUserList(FOLLOWED_BY_DATA_URL);
         userList = followedByUserList;
 
-        boolean isDuplicate;
+        //Returns list of followers
+        List<Users> followsUserList = UserDataUtil.fetchUserList(FOLLOWS_DATA_URL);
+
+        //For checking duplicate values
+        boolean isDuplicate = false;
         for(int i = 0; i < followsUserList.size();i++){
             isDuplicate = false;
             for(int j = 0; j < userList.size();j++) {

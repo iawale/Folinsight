@@ -16,9 +16,9 @@ import java.util.List;
  * Created by chira on 7/9/2017.
  */
 
-public class FollowerDataUtil extends NetworkUtil {
-    private static boolean ownerFollows = false;
-    private static boolean ownerFollowedBy = false;
+public class UserDataUtil extends NetworkUtil {
+    private static boolean followedBy = false;
+    private static boolean follows = false;
     /**
      *
      * @param url The url that returns the JSON data of the users follower list
@@ -26,9 +26,10 @@ public class FollowerDataUtil extends NetworkUtil {
      */
     public static List<Users> fetchUserList(String url){
         if(url.toLowerCase().contains("follows")){
-            ownerFollows = true;
-        }else if(url.toLowerCase().contains("followed-by")){
-            ownerFollowedBy = true;
+            follows = true;
+        }
+        if(url.toLowerCase().contains("followed-by")){
+            followedBy = true;
         }
 
         URL followerDataUrl = createUrl(url);
@@ -68,7 +69,7 @@ public class FollowerDataUtil extends NetworkUtil {
 
                 String date = month + "/" + day + "/" + year + " "+hour+":"+min + " "+timezone;
 
-                Users currentUsersObject = new Users(id,username,full_name,profilePicture_link,date,ownerFollowedBy,ownerFollows);
+                Users currentUsersObject = new Users(id,username,full_name,profilePicture_link,date,followedBy,follows);
                 usersList.add(currentUsersObject);
             }
         } catch (JSONException e) {

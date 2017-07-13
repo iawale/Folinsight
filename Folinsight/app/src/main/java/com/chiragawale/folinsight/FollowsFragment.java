@@ -2,6 +2,7 @@ package com.chiragawale.folinsight;
 
 
 import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 
 import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.loader.UserLoader;
+import com.chiragawale.folinsight.loader.UserLoaderLocal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.List;
  * Created by chira on 7/12/2017.
  */
 
-public class FollowerFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Users>> {
+public class FollowsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Users>> {
     //Adapter for providing data to the list view
     private UserAdapter mUserAdapter;
 
@@ -60,8 +62,8 @@ public class FollowerFragment extends Fragment implements LoaderManager.LoaderCa
         });
 
 
-        Log.w("Followed Activity","Logged in" + Keys_Access.getAccessToken());
-        //getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
+        Log.w("Follows Fragment","Logged in" + Keys_Access.getAccessToken());
+        getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
 
 
         return rootView;
@@ -72,7 +74,7 @@ public class FollowerFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<List<Users>> onCreateLoader(int id, Bundle args) {
         progressBar.setVisibility(View.VISIBLE);
-        return new UserLoader(getActivity());
+        return new UserLoaderLocal(getActivity(),GlobalVar.FOLLOWS_FRAGMENT);
     }
 
     //When the loader is done loading the data
@@ -86,6 +88,7 @@ public class FollowerFragment extends Fragment implements LoaderManager.LoaderCa
     //When the loader is reset
     @Override
     public void onLoaderReset(Loader<List<Users>> loader) {
+
         mUserAdapter.clear();
     }
 }

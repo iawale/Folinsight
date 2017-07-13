@@ -32,9 +32,9 @@ private String tabTitles[] = new String[] { "Overview","Followers", "Followed"};
         if(position == 0){
             return new OverviewFragment();
         }else if (position == 1){
-            return new FollowerFragment();
+            return new FollowedByFragment();
         }else{
-            return new FollowedFragment();
+            return new FollowsFragment();
         }
 
     }

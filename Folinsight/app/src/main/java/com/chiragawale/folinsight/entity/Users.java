@@ -11,17 +11,17 @@ public class Users {
     private String userName,fullName,profilePictureLink;
     private String date_trackedFrom,profileLink;
     private int likesPosted,commentsPosted;
-    private boolean follow;
+    private boolean followedBy;
     private boolean follows;
 
 
-    public Users(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean follow, boolean follows) {
+    public Users(int followerID, String userName, String fullName, String profilePictureLink, String date_trackedFrom, boolean followedBy, boolean follows) {
         this.followerID = followerID;
         this.userName = userName;
         this.fullName = fullName;
         this.profilePictureLink = profilePictureLink;
         this.date_trackedFrom = date_trackedFrom;
-        this.follow = follow;
+        this.followedBy = followedBy;
         this.profileLink = "https://www.instagram.com/"+userName;
         this.follows = follows;
     }
@@ -70,12 +70,12 @@ public class Users {
         this.date_trackedFrom = date_trackedFrom;
     }
 
-    public boolean isFollow() {
-        return follow;
+    public boolean isFollowedBy() {
+        return followedBy;
     }
 
-    public void setFollow(boolean follow) {
-        this.follow = follow;
+    public void setFollowedBy(boolean followedBy) {
+        this.followedBy = followedBy;
     }
 
     public String getProfileLink (){

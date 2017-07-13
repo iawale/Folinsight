@@ -9,7 +9,9 @@ import java.util.List;
  */
 
 public interface UserDao {
-    void setUserList(List<Users> userList);
-    List<Users> getUserList();
+    void setUpUserLists(List<Users> userList);
     void clearUserList();
+    List<Users> getUserList();
+    List<Users> getFollowsList();
+    List<Users> getFollowedByList();
 }

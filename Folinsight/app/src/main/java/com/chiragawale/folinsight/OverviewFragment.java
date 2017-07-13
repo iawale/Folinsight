@@ -7,6 +7,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chiragawale.folinsight.dao.UserDao;
@@ -18,27 +19,32 @@ import java.util.List;
 
 
 public class OverviewFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Users>>{
+    private ProgressBar progressBar;
 
-    TextView textView;
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_overview,container,false);
-        textView = (TextView) rootView.findViewById(R.id.over_view);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+
+        //Kicks Off the Loader
         getLoaderManager().initLoader(0,null,this);
         return rootView;
     }
 
-
+    //When the loader is created for first time
     @Override
     public Loader<List<Users>> onCreateLoader(int id, Bundle args) {
+        progressBar.setVisibility(View.VISIBLE);
         return new UserLoader(getActivity());
     }
 
+    //When loader finishes loading
     @Override
     public void onLoadFinished(Loader<List<Users>> loader, List<Users> data) {
-        GlobalVar.userDao.setUserList(data);
+        GlobalVar.userDao.setUpUserLists(data);
+        progressBar.setVisibility(View.INVISIBLE);
     }
-
+    //When loader is reset
     @Override
     public void onLoaderReset(Loader<List<Users>> loader) {
         GlobalVar.userDao.clearUserList();
