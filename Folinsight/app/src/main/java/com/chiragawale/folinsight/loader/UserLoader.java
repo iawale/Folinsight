@@ -11,7 +11,7 @@ import com.chiragawale.folinsight.entity.Follower;
 import com.chiragawale.folinsight.util.CommentDataUtil;
 import com.chiragawale.folinsight.util.FollowerDataUtil;
 import com.chiragawale.folinsight.util.LikeDataUtil;
-import com.chiragawale.folinsight.util.SelfRecentMediaUtil;
+import com.chiragawale.folinsight.util.RecentMediaUtil;
 
 
 import java.util.List;
@@ -30,6 +30,7 @@ public class UserLoader extends AsyncTaskLoader<List<Follower>> {
     private final String RECENT_MEDIA_URL = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + Keys_Access.getAccessToken();
     //API TO GET FOLLOWED DATA
     private final String FOLLOWED_DATA_URL = "https://api.instagram.com/v1/users/self/follows?access_token=" + Keys_Access.getAccessToken();
+    //API TO GET RECENT MEDIA OF FOLLOE
 
     private int activity_code;
     private List<Follower> userList;
@@ -50,16 +51,19 @@ public class UserLoader extends AsyncTaskLoader<List<Follower>> {
             return null;
         }
         //If the loader is called by Followed activity the following executes
-        if(activity_code == App_Constants.FOLLOWED_ACTIVITY){
-            //Returns list of followers
+        if (activity_code == App_Constants.FOLLOWED_ACTIVITY) {
+            //Returns list of users followed by the owner of access token
             userList = FollowerDataUtil.fetchFollowerList(FOLLOWED_DATA_URL);
+
+
+
             return userList;
         }
         Log.e("LOAD IN BACK GROUND", "WERROR==================");
         //Returns list of followers
         userList = FollowerDataUtil.fetchFollowerList(FOLLOWER_DATA_URL);
         //Returns List of recent-self posted media Ids
-        List<String> userRecentMediaIdList = SelfRecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
+        List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
         //Scans for likes and comments from followers and adds them to their respective follower objects respectively
         scanMediaForLikesAndComments(userRecentMediaIdList);
         //Returns Fully processed follower list
@@ -67,6 +71,28 @@ public class UserLoader extends AsyncTaskLoader<List<Follower>> {
 
         return userList;
     }
+    /*=====================================================/
+    For prcessing information about users followed by the owner of access Token */
+    /*=====================================================*/
+    void getFollowedUserRecentMediaList(List<Follower> followedUserList){
+        for(int i = 0; i < followedUserList.size(); i++) {
+            List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(RECENT_MEDIA_URL);
+        }
+
+    }
+
+
+
+
+
+
+    /* =======================================================*/
+    /*=====================================================*/
+
+
+      /*=====================================================/
+    For prcessing information about users who follow the owner of access Token */
+    /*=====================================================*/
 
     //Processes like and comments from the each post and updates their respective follower object data
     private void scanMediaForLikesAndComments(List<String> userRecentMediaList) {

@@ -13,8 +13,8 @@ import java.util.List;
  * Created by chira on 7/8/2017.
  */
 
-public class SelfRecentMediaUtil extends NetworkUtil {
-    private SelfRecentMediaUtil() {
+public class RecentMediaUtil extends NetworkUtil {
+    private RecentMediaUtil() {
     }
     //Returns the ids of Users recet posts
     public static List<String>  fetechRecentMediaIdList (String request_url){
