@@ -39,13 +39,13 @@ public class UserDataUtil extends NetworkUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Users> usersList = getFollowerList(jsonResponse);
+        List<Users> usersList = getUserList(jsonResponse);
 
         return usersList;
     }
 
     //Returns the list with follower objects created from data exraceted from JSON response
-    private static List<Users> getFollowerList(String jsonResponse){
+    private static List<Users> getUserList(String jsonResponse){
         List<Users> usersList = new ArrayList<>();
 
         try {

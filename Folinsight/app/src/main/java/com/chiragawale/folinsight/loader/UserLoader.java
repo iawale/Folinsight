@@ -61,8 +61,9 @@ public class UserLoader extends AsyncTaskLoader<List<Users>> {
         boolean isDuplicate = false;
         for(int i = 0; i < followsUserList.size();i++){
             isDuplicate = false;
-            for(int j = 0; j < userList.size();j++) {
-                if ( followsUserList.get(i).getFollowerID() == userList.get(j).getFollowerID()) {
+            for(Users u: userList) {
+                if ( followsUserList.get(i).getFollowerID() == u.getFollowerID()) {
+                    u.setFollows(true);
                     isDuplicate = true;
                     break;
                 }

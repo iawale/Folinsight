@@ -14,7 +14,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter{
 
  * For the names of the tabs
  */
-private String tabTitles[] = new String[] { "Overview","Followers", "Followed"};
+private String tabTitles[] = new String[] { "Overview","Followers", "Follows"};
     private Context mcontext;
     public SimpleFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);

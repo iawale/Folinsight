@@ -8,9 +8,9 @@ import android.graphics.drawable.Drawable;
  */
 public class Users {
     private int followerID;
-    private String userName,fullName,profilePictureLink;
-    private String date_trackedFrom,profileLink;
-    private int likesPosted,commentsPosted;
+    private String userName, fullName, profilePictureLink;
+    private String date_trackedFrom, profileLink;
+    private int likesPosted, commentsPosted;
     private boolean followedBy;
     private boolean follows;
 
@@ -22,7 +22,7 @@ public class Users {
         this.profilePictureLink = profilePictureLink;
         this.date_trackedFrom = date_trackedFrom;
         this.followedBy = followedBy;
-        this.profileLink = "https://www.instagram.com/"+userName;
+        this.profileLink = "https://www.instagram.com/" + userName;
         this.follows = follows;
     }
 
@@ -78,7 +78,7 @@ public class Users {
         this.followedBy = followedBy;
     }
 
-    public String getProfileLink (){
+    public String getProfileLink() {
         return profileLink;
     }
 

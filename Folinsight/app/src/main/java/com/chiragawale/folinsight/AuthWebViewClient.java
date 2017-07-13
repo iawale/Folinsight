@@ -28,7 +28,6 @@ public class AuthWebViewClient extends WebViewClient {
                 //Opens the main activity
                 Intent mainActivity = new Intent(view.getContext(), MainActivity.class);
                 view.getContext().startActivity(mainActivity);
-                Log.e("FINISHED", "LOGGED IN");
             }
             return true;
         }
