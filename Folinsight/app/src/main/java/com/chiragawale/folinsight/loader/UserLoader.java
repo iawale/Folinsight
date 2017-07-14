@@ -1,8 +1,9 @@
 package com.chiragawale.folinsight.loader;
 
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
+
 import android.util.Log;
 
 import com.chiragawale.folinsight.GlobalVar;
@@ -40,17 +41,17 @@ public class UserLoader extends AsyncTaskLoader<List<Users>> {
     @Override
     public List<Users> loadInBackground() {
         Log.e("Loader called ", "=======================================================");
-
+        Log.e("Access Kye (Loader)", Keys_Access.getAccessToken());
         //Returns List of recent-self posted media Ids
-        List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(GlobalVar.RECENT_MEDIA_URL);
+        List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(GlobalVar.getRecentMediaUrl());
 
 
         //Returns list of users followed by the owner of access token
-        userList = UserDataUtil.fetchUserList(GlobalVar.FOLLOWED_BY_DATA_URL);
+        userList = UserDataUtil.fetchUserList(GlobalVar.getFollowedByDataUrl());
 
 
         //Returns list of followers
-        List<Users> followsUserList = UserDataUtil.fetchUserList(GlobalVar.FOLLOWS_DATA_URL);
+        List<Users> followsUserList = UserDataUtil.fetchUserList(GlobalVar.getFollowsDataUrl());
 
         //For checking duplicate values
        boolean duplicate = false;

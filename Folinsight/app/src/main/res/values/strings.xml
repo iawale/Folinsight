@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Folinsight</string>
+    <string name="logout">Use Another Account</string>
 </resources>

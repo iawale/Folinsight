@@ -16,7 +16,7 @@ public class AuthWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         view.clearCache(true);
-
+        Log.e("AuthWebView","=========================================================");
         //Extracts access token from the redirected URI
         if (url.startsWith(Keys_Access.getRedirectUri())) {
             System.out.println(url);
@@ -24,6 +24,8 @@ public class AuthWebViewClient extends WebViewClient {
             request_token = parts[1];
             //Sets the access token to a global variable for use later
             Keys_Access.setAccessToken(request_token);
+            //Set the endpoint urls according to access token
+            GlobalVar.setUpUrls();
             if (request_token != null) {
                 //Opens the main activity
                 Intent mainActivity = new Intent(view.getContext(), MainActivity.class);

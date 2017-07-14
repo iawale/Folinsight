@@ -28,17 +28,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //Web View for logging in to Instagrm to obtain access token
-        WebView webView = new WebView(this);
-        webView.setVerticalScrollBarEnabled(false);
-        setContentView(webView);
-        webView.setHorizontalScrollBarEnabled(false);
-        webView.setWebViewClient(new AuthWebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
+        GlobalVar.webView = new WebView(this);
+        GlobalVar.webView .setVerticalScrollBarEnabled(false);
+        setContentView(GlobalVar.webView );
+        GlobalVar.webView .setHorizontalScrollBarEnabled(false);
+        GlobalVar.webView .setWebViewClient(new AuthWebViewClient());
+        GlobalVar.webView .getSettings().setJavaScriptEnabled(true);
 
-        //webView.loadUrl(Keys_Access.getAccessRequestUri());//(THIS IS FOR TESTING)
+        GlobalVar.webView.loadUrl(Keys_Access.getAccessRequestUri());//(THIS IS FOR TESTING)
 
         //Logs out of instagram first
-        webView.loadUrl("https://www.instagram.com/accounts/logout");
+       // GlobalVar.webView.loadUrl("https://www.instagram.com/accounts/logout");
 
 
     }

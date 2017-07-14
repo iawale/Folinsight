@@ -28,11 +28,11 @@ public class UserDataUtil extends NetworkUtil {
      * @return  list of followers extracted from the response from the server
      */
     public static List<Users> fetchUserList(String url){
-        if(url.equalsIgnoreCase(GlobalVar.FOLLOWS_DATA_URL)){
+        if(url.equalsIgnoreCase(GlobalVar.getFollowsDataUrl())){
             follows = true;
             followedBy = false;
         }
-        if(url.equalsIgnoreCase(GlobalVar.FOLLOWED_BY_DATA_URL)){
+        if(url.equalsIgnoreCase(GlobalVar.getFollowedByDataUrl())){
             followedBy = true;
             follows= false;
         }
