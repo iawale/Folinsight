@@ -37,6 +37,7 @@ public  class NetworkUtil {
      * @return JSON Reponse from server
      */
     public static String makeHttpRequest(URL requestDataUrl) throws IOException {
+        Log.e("Network Util",requestDataUrl.toString());
         String jSONResponse = "";
         if(requestDataUrl == null){
             return null;

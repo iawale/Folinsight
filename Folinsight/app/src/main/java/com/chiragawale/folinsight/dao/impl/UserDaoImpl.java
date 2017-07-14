@@ -60,8 +60,6 @@ public class UserDaoImpl implements UserDao {
     void setUpSpecificLists(){
         for(Users u : userList){
             if(u.isFollows() && u.isFollowedBy()){
-                followedByList.add(u);
-                followsList.add(u);
                 mutualList.add(u);
             }else if(u.isFollowedBy()){
                 followedByList.add(u);

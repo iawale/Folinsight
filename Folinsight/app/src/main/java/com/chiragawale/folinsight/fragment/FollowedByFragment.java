@@ -50,7 +50,8 @@ public class FollowedByFragment extends Fragment implements LoaderManager.Loader
         //Linking the adapter to the list view
         ListView listView = (ListView) rootView.findViewById(R.id.follower_list);
         listView.setAdapter(mUserAdapter);
-
+        View empty_vieiw = rootView.findViewById(R.id.empty_view);
+        listView.setEmptyView(empty_vieiw);
 
         //Setting up intent to open profile of selected user from list
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

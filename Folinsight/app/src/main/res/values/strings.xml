@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Folinsight</string>
     <string name="logout">Use Another Account</string>
+    <string name="emptyview_title_text">Empty List</string>
+    <string name="emptyview_subtitle_text">Please pull to refresh</string>
 </resources>
