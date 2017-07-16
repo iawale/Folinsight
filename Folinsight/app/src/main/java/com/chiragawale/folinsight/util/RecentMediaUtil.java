@@ -1,5 +1,9 @@
 package com.chiragawale.folinsight.util;
 
+import android.util.Log;
+
+import com.chiragawale.folinsight.GlobalVar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +36,7 @@ public class RecentMediaUtil extends NetworkUtil {
 
     //Extracts the ids from the json response and returns the list
     private static List<String> extractDataFromJsonResponse(String jsonResponse){
+        int totalLikes = 0,totalComments = 0;
         if(jsonResponse == null){
             return null;
         }
@@ -44,8 +49,19 @@ public class RecentMediaUtil extends NetworkUtil {
             for(int i = 0; i < dataArray.length();i++){
                 JSONObject currentMedia = dataArray.getJSONObject(i);
                 String id = currentMedia.getString("id");
+                JSONObject likes = currentMedia.getJSONObject("likes");
+                int count_likes = likes.getInt("count");
+                totalLikes+=count_likes;
+                JSONObject comments = currentMedia.getJSONObject("comments");
+                int count_comments = comments.getInt("count");
+                totalComments += count_comments;
                 recentMediaIdList.add(id);
             }
+
+            //Storing total likes, comments and posts
+            GlobalVar.mediaDao.setTotalLikes(totalLikes);
+            GlobalVar.mediaDao.setTotalComments(totalComments);
+            GlobalVar.mediaDao.setTotalPosts(recentMediaIdList.size());
 
 
         } catch (JSONException e) {

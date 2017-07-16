@@ -1,16 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/over_view"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="cursive"
-        android:gravity="center"
-        android:text="Welcome."
-        android:textSize="60dp" />
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/people_heading"
+                style="@style/headings"
+                android:text="People" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/follower_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Follows" />
+
+                    <TextView
+                        android:id="@+id/follows_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="1000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fans_label"
+                        style="@style/labels"
+                        android:layout_height="match_parent"
+                        android:text="Fans" />
+
+                    <TextView
+                        android:id="@+id/fans_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mutual"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Mutual" />
+
+                    <TextView
+                        android:id="@+id/mutual_value"
+                        style="@style/values"
+                        android:layout_height="match_parent"
+                        tools:text="10" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--POSTS -->
+
+            <!--All-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/post_heading"
+                style="@style/headings"
+                android:text="Posts" />
+                <TextView
+                    android:id="@+id/total_posts"
+                    style="@style/headings"
+                    android:text="(N/A)" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/total_subheading"
+                    style="@style/subheadings"
+                    android:text="All" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/total_likes_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Likes" />
+
+                    <TextView
+                        android:id="@+id/total_likes_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="1000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/total_comments_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Comments" />
+
+                    <TextView
+                        android:id="@+id/total_comments_value"
+                        style="@style/values"
+                        android:layout_height="match_parent"
+                        tools:text="10" />
+                </LinearLayout>
+                <!--Mutual-->
+                <TextView
+                    android:id="@+id/mutual_subheading"
+                    style="@style/subheadings"
+                    android:text="Mutual" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mutual_likes_label"
+                        style="@style/labels"
+                        android:layout_height="match_parent"
+                        android:text="Likes" />
+
+                    <TextView
+                        android:id="@+id/mutual_likes_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mutual_comments_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Comments" />
+
+                    <TextView
+                        android:id="@+id/mutual_comments_value"
+                        style="@style/values"
+                        android:layout_height="match_parent"
+                        tools:text="10" />
+                </LinearLayout>
 
 
-</RelativeLayout>
+                <!--Fans-->
+                <TextView
+                    android:id="@+id/fans_subheading"
+                    style="@style/subheadings"
+                    android:text="Fans" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fans_likes_label"
+                        style="@style/labels"
+                        android:layout_height="match_parent"
+                        android:text="Likes" />
+
+                    <TextView
+                        android:id="@+id/fans_likes_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fans_comments_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Comments" />
+
+                    <TextView
+                        android:id="@+id/fans_comments_value"
+                        style="@style/values"
+                        android:layout_height="match_parent"
+                        tools:text="10" />
+                </LinearLayout>
+
+                <!--People User Follows-->
+                <TextView
+                    android:id="@+id/follows_subheading"
+                    style="@style/subheadings"
+                    android:text="Follows" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/follows_likes_label"
+                        style="@style/labels"
+                        android:layout_height="match_parent"
+                        android:text="Likes" />
+
+                    <TextView
+                        android:id="@+id/follows_likes_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/follows_comments_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Comments" />
+
+                    <TextView
+                        android:id="@+id/follows_comments_value"
+                        style="@style/values"
+                        android:layout_height="match_parent"
+                        tools:text="10" />
+                </LinearLayout>
+                <!--Strangers-->
+                <TextView
+                    android:id="@+id/strangers_subheading"
+                    style="@style/subheadings"
+                    android:text="Strangers" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/strangers_likes_label"
+                        style="@style/labels"
+                        android:layout_height="match_parent"
+                        android:text="Likes" />
+
+                    <TextView
+                        android:id="@+id/strangers_likes_value"
+                        style="@style/values"
+                        android:layout_height="wrap_content"
+                        tools:text="20" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/strangers_comments_label"
+                        style="@style/labels"
+                        android:layout_height="wrap_content"
+                        android:text="Comments" />
+
+                    <TextView
+                        android:id="@+id/strangers_comments_value"
+                        style="@style/values"
+                        android:layout_height="match_parent"
+                        tools:text="10" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

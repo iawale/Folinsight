@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.chiragawale.folinsight.entity.Users;
+import com.chiragawale.folinsight.fragment.OverviewFragment;
 import com.chiragawale.folinsight.loader.UserLoader;
 
 import java.util.List;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //When the loader is created for first time
     @Override
     public Loader<List<Users>> onCreateLoader(int id, Bundle args) {
+
         progressBar.setVisibility(View.VISIBLE);
         return new UserLoader(MainActivity.this);
     }
@@ -86,12 +88,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(android.content.Loader<List<Users>> loader, List<Users> data) {
         GlobalVar.userDao.clearUserList();
+        //Set up lists with fresh data
         GlobalVar.userDao.setUpUserLists(data);
+        // Set total follower mutual and follows values
+        GlobalVar.mediaDao.setFansCount(GlobalVar.userDao.getFollowedByList().size());
+        GlobalVar.mediaDao.setMutualCount(GlobalVar.userDao.getMutualList().size());
+        GlobalVar.mediaDao.setFollowsCount(GlobalVar.userDao.getFollowsList().size());
+
+
+        OverviewFragment.setValues();
+
         progressBar.setVisibility(View.INVISIBLE);
     }
     //Onloader Reset
     @Override
     public void onLoaderReset(android.content.Loader<List<Users>> loader) {
+
     }
 
 }

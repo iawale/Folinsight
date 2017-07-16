@@ -2,7 +2,9 @@ package com.chiragawale.folinsight;
 
 import android.webkit.WebView;
 
+import com.chiragawale.folinsight.dao.MediaDao;
 import com.chiragawale.folinsight.dao.UserDao;
+import com.chiragawale.folinsight.dao.impl.MediaDaoImpl;
 import com.chiragawale.folinsight.dao.impl.UserDaoImpl;
 
 /**
@@ -11,6 +13,8 @@ import com.chiragawale.folinsight.dao.impl.UserDaoImpl;
 
 public class GlobalVar {
     public static final UserDao userDao = new UserDaoImpl();
+    public static final MediaDao mediaDao = new MediaDaoImpl();
+
     public static final int FOLLOWED_BY_FRAGMENT = 0;
     public static final int FOLLOWS_FRAGMENT = 1;
     public static final int MUTUAL_FRAGMENT = 2;

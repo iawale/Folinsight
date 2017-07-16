@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">cursive</item>
     </style>
 
     <style name="followerName">
@@ -30,4 +29,39 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="labels">
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+    <style name="values">
+        <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:layout_weight">3</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:text">N/A</item>
+    </style>
+    <style name="headings">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="subheadings">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="block">
+        <item name="android:padding">5dp</item>
+    </style>
 </resources>

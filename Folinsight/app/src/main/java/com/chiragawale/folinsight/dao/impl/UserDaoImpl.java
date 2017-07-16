@@ -1,5 +1,8 @@
 package com.chiragawale.folinsight.dao.impl;
 
+import android.util.Log;
+
+import com.chiragawale.folinsight.GlobalVar;
 import com.chiragawale.folinsight.dao.UserDao;
 import com.chiragawale.folinsight.entity.Users;
 
@@ -20,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     //Sets up the lists with data loaded from Instagram Api
     @Override
     public void setUpUserLists(List<Users> userList) {
-        this.userList  = userList;
+        this.userList = userList;
         setUpSpecificLists();
     }
 
@@ -57,15 +60,35 @@ public class UserDaoImpl implements UserDao {
     }
 
     //Sets up the lists with their respective set of uses
-    void setUpSpecificLists(){
-        for(Users u : userList){
-            if(u.isFollows() && u.isFollowedBy()){
+    void setUpSpecificLists() {
+        for (Users u : userList) {
+            if (u.isFollows() && u.isFollowedBy()) {
                 mutualList.add(u);
-            }else if(u.isFollowedBy()){
+                //Counting likes and comments
+                GlobalVar.mediaDao.setMutualLikes(GlobalVar.mediaDao.getMutualLikes() + u.getLikesPosted());
+                GlobalVar.mediaDao.setMutualComments(GlobalVar.mediaDao.getMutualComments() + u.getCommentsPosted());
+            } else if (u.isFollowedBy()) {
                 followedByList.add(u);
-            }else if(u.isFollows()){
+                //Counting likes and comments
+                GlobalVar.mediaDao.setFanLikes(GlobalVar.mediaDao.getFanLikes() + u.getLikesPosted());
+                GlobalVar.mediaDao.setFanComments(GlobalVar.mediaDao.getFanComments() + u.getCommentsPosted());
+
+            } else if (u.isFollows()) {
                 followsList.add(u);
+                //Counting likes and comments
+                GlobalVar.mediaDao.setFollowsLikes(GlobalVar.mediaDao.getFollowsLikes() + u.getLikesPosted());
+                GlobalVar.mediaDao.setFollowsComments(GlobalVar.mediaDao.getFollowsComments() + u.getCommentsPosted());
             }
         }
+        //Stranger likes and comments = total - fans - follows -mutual
+        GlobalVar.mediaDao.setStrangerLikes(GlobalVar.mediaDao.getTotalLikes()
+                - GlobalVar.mediaDao.getFanLikes()
+                - GlobalVar.mediaDao.getFollowsLikes()
+                - GlobalVar.mediaDao.getMutualLikes());
+        GlobalVar.mediaDao.setStrangerComments(GlobalVar.mediaDao.getTotalComments()
+                - GlobalVar.mediaDao.getFanComments()
+                - GlobalVar.mediaDao.getFollowsComments()
+                - GlobalVar.mediaDao.getMutualComments());
+
     }
 }
