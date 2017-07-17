@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.chiragawale.folinsight.GlobalVar;
 import com.chiragawale.folinsight.dao.UserDao;
+import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.entity.Users;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class UserDaoImpl implements UserDao {
     private List<Users> followsList = new ArrayList<>();
     private List<Users> followedByList = new ArrayList<>();
     private List<Users> mutualList = new ArrayList<>();
+    private List<Details_ig> dataList = new ArrayList<>();
 
     //Sets up the lists with data loaded from Instagram Api
     @Override
@@ -49,6 +51,59 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<Users> getMutualList() {
         return mutualList;
+    }
+
+    @Override
+    public List<Details_ig> getDataList() {
+        fillUpDataList();
+        return dataList;
+    }
+
+    //Calculates averages and stores them for displaying
+    public void fillUpDataList() {
+        double totalPosts = GlobalVar.mediaDao.getTotalPosts();
+        Details_ig data = new Details_ig(
+                "Posts",
+                totalPosts / GlobalVar.mediaDao.getTotalLikes(),
+                totalPosts / GlobalVar.mediaDao.getTotalComments());
+        dataList.add(data);
+
+        data = new Details_ig(
+                "Follower",
+                totalPosts / (GlobalVar.mediaDao.getFanLikes() + GlobalVar.mediaDao.getMutualLikes()),
+                totalPosts / (GlobalVar.mediaDao.getFanComments() + GlobalVar.mediaDao.getMutualComments()));
+        dataList.add(data);
+
+        data = new Details_ig(
+                "Mutual",
+                totalPosts / GlobalVar.mediaDao.getMutualLikes(),
+                totalPosts / GlobalVar.mediaDao.getMutualComments());
+        dataList.add(data);
+
+        data = new Details_ig(
+                "Fans",
+                totalPosts / GlobalVar.mediaDao.getFanLikes(),
+                totalPosts / GlobalVar.mediaDao.getFanComments());
+        dataList.add(data);
+
+        data = new Details_ig(
+                "Follows",
+                totalPosts / GlobalVar.mediaDao.getFollowsLikes(),
+                totalPosts / GlobalVar.mediaDao.getFollowsComments());
+        dataList.add(data);
+
+        data = new Details_ig(
+                "Posts",
+                totalPosts / (GlobalVar.mediaDao.getTotalLikes() - (
+                        GlobalVar.mediaDao.getFanLikes()
+                                + GlobalVar.mediaDao.getFollowsLikes()
+                                + GlobalVar.mediaDao.getMutualLikes())),
+                totalPosts / (GlobalVar.mediaDao.getTotalComments() - (
+                        GlobalVar.mediaDao.getFollowsComments()
+                                + GlobalVar.mediaDao.getMutualComments()
+                                + GlobalVar.mediaDao.getFanComments())));
+        dataList.add(data);
+
     }
 
     //Clears lists
@@ -92,4 +147,5 @@ public class UserDaoImpl implements UserDao {
                 - GlobalVar.mediaDao.getMutualComments());
 
     }
+
 }

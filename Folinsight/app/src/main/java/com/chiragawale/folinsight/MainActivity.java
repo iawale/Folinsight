@@ -1,7 +1,9 @@
 package com.chiragawale.folinsight;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Users>> {
     ProgressBar progressBar;
-
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //Setting up progress bar
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+        // Setup FAB to open EditorActivity
+         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OverviewDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -110,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         OverviewFragment.setValues();
-
         progressBar.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.VISIBLE);
     }
     //Onloader Reset
     @Override

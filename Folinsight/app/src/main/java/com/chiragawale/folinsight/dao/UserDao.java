@@ -1,5 +1,6 @@
 package com.chiragawale.folinsight.dao;
 
+import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.entity.Users;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface UserDao {
     List<Users> getFollowsList();
     List<Users> getFollowedByList();
     List<Users> getMutualList();
+    List<Details_ig> getDataList();
+
 }

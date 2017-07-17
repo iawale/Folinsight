@@ -47,21 +47,11 @@ public class UserAdapter extends ArrayAdapter<Users> {
         //Setting the texts of their respective textViews according to the data received from the List
         follower_name.setText(currentUser.getFullName());
         follower_userName.setText(currentUser.getUserName());
-
-        //follower_track_date.setText(currentUsers.getDate_trackedFrom());
-
+        follower_track_date.setText(currentUser.getDate_trackedFrom());
         follower_comments.setText("Comments : "+ String.valueOf(currentUser.getCommentsPosted()));
         follower_likes.setText("Likes : " + String.valueOf(currentUser.getLikesPosted()));
         //Loads images from instagram site
         Glide.with(getContext()).load(currentUser.getProfilePictureLink()).skipMemoryCache(true).override(144,144).into(follower_profile_picture);
-
-        /*==========================================/*/
-        follower_track_date.setText("FollowedBy " + currentUser.isFollowedBy() + " Follows " + currentUser.isFollows());
-
-//        if(currentUser.isFollowedBy() ){
-//            follower_track_date.setText("Followed By ");
-//        }
-        /*==========================================/*/
 
         return listItemView;
     }

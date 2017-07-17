@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+        <TextView
+            style="@style/headings"
+            tools:text="Per Post:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:id="@+id/heading"/>
+
+        <LinearLayout
+            style="@style/block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/average_likes_label"
+                style="@style/labels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Average Likes" />
+
+            <TextView
+                android:id="@+id/average_likes_value"
+                style="@style/values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                tools:text="N/A"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/average_comments_label"
+                style="@style/labels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Average Comments" />
+
+            <TextView
+                android:id="@+id/average_comments_value"
+                style="@style/values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                tools:text="N/A"/>
+        </LinearLayout>
+
+    </LinearLayout>
