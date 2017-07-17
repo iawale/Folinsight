@@ -63,10 +63,8 @@ public class MutualFragment extends Fragment implements LoaderManager.LoaderCall
             }
         });
 
-
-        Log.w("Mutual By Activity","");
         //Kick off the loader
-        getLoaderManager().initLoader(FOLLOWER_LOADER_ID,null,this);
+        getLoaderManager().restartLoader(FOLLOWER_LOADER_ID,null,this);
 
 
         return rootView;
@@ -93,4 +91,6 @@ public class MutualFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoaderReset(Loader<List<Users>> loader) {
         mUserAdapter.clear();
     }
+
+
 }

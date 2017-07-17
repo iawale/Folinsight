@@ -40,8 +40,6 @@ public class UserLoader extends AsyncTaskLoader<List<Users>> {
 
     @Override
     public List<Users> loadInBackground() {
-        Log.e("Loader called ", "=======================================================");
-        Log.e("Access Kye (Loader)", Keys_Access.getAccessToken());
         //Returns List of recent-self posted media Ids
         List<String> userRecentMediaIdList = RecentMediaUtil.fetechRecentMediaIdList(GlobalVar.getRecentMediaUrl());
 

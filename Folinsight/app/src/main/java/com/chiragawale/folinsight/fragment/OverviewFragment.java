@@ -58,7 +58,7 @@ public class OverviewFragment extends Fragment {
     //Set the values of text views of the fragment
     public static void setValues(){
 
-        totalPosts.setText(GlobalVar.mediaDao.getTotalPosts()+"");
+        totalPosts.setText("("+GlobalVar.mediaDao.getTotalPosts()+")");
         totalLikes.setText(GlobalVar.mediaDao.getTotalLikes()+"");
         totalComments.setText(GlobalVar.mediaDao.getTotalComments()+"");
 

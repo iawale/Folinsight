@@ -57,6 +57,7 @@ public class UserDaoImpl implements UserDao {
         userList.clear();
         followsList.clear();
         followedByList.clear();
+        mutualList.clear();
     }
 
     //Sets up the lists with their respective set of uses

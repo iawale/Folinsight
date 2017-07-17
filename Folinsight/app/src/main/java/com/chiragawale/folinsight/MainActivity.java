@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.fragment.OverviewFragment;
@@ -63,13 +64,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (item.getItemId()) {
             case R.id.logout:
                 Log.e("Logout", "=========================================================");
+                getLoaderManager().destroyLoader(0);
+                GlobalVar.userDao.clearUserList();
+                GlobalVar.mediaDao.resetValues();
                 GlobalVar.webView.loadUrl("https://www.instagram.com/accounts/logout");
+                Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
             case R.id.refresh:
-                Log.e("Refresh", "====================================================");
+                //Resets all values
+                GlobalVar.userDao.clearUserList();
+                GlobalVar.mediaDao.resetValues();
                 //Kicks Off the Loader
-                getLoaderManager().initLoader(0, null, this);
+                getLoaderManager().restartLoader(0,null,this);
+                Log.e("Refresh", "====================================================");
+                //Check for error
+                if(GlobalVar.error429){
+                    Toast.makeText(this, "Too many requests to Api in an hour, please try again in the next hour", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(this, "Load complete", Toast.LENGTH_SHORT).show();
+                }
+
                 return true;
         }
         return false;
@@ -79,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //When the loader is created for first time
     @Override
     public Loader<List<Users>> onCreateLoader(int id, Bundle args) {
-
         progressBar.setVisibility(View.VISIBLE);
         return new UserLoader(MainActivity.this);
     }
@@ -87,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //when loader finishes loading
     @Override
     public void onLoadFinished(android.content.Loader<List<Users>> loader, List<Users> data) {
-        GlobalVar.userDao.clearUserList();
         //Set up lists with fresh data
         GlobalVar.userDao.setUpUserLists(data);
         // Set total follower mutual and follows values
@@ -103,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //Onloader Reset
     @Override
     public void onLoaderReset(android.content.Loader<List<Users>> loader) {
-
+        Log.e("Loader r main","==========================================================");
+        GlobalVar.userDao.clearUserList();
     }
 
 }
