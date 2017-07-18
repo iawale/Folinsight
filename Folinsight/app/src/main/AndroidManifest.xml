@@ -21,8 +21,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".OverviewDetailActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".OverviewDetailActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".DbTaskHandler"></activity>
+        <provider
+            android:name=".data.InsightProvider"
+            android:authorities="com.chiragawale.folinsight"
+            android:exported="false" />
     </application>
 
 </manifest>

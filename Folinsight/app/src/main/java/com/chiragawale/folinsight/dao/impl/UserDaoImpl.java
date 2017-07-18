@@ -22,6 +22,9 @@ public class UserDaoImpl implements UserDao {
     private List<Users> mutualList = new ArrayList<>();
     private List<Details_ig> dataList = new ArrayList<>();
 
+
+
+
     //Sets up the lists with data loaded from Instagram Api
     @Override
     public void setUpUserLists(List<Users> userList) {

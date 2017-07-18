@@ -73,7 +73,7 @@ public class UserDataUtil extends NetworkUtil {
                 int min = c.get(Calendar.MINUTE);
                 String timezone = c.getTimeZone().getDisplayName();
 
-                String date = month + "/" + day + "/" + year + " "+hour+":"+min + " "+timezone;
+                String date = month + "-" + day + "-" + year;
 
                 Users currentUsersObject = new Users(id,username,full_name,profilePicture_link,date,followedBy,follows);
                 usersList.add(currentUsersObject);

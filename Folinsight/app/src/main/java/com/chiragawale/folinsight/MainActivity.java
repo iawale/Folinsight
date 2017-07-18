@@ -26,7 +26,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Users>> {
     ProgressBar progressBar;
-    FloatingActionButton fab;
+    FloatingActionButton fab,fab_insight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OverviewDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fab_insight = (FloatingActionButton) findViewById(R.id.fab_insight);
+        fab_insight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DbTaskHandler.class);
                 startActivity(intent);
             }
         });
@@ -123,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         OverviewFragment.setValues();
         progressBar.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
+        fab_insight.setVisibility(View.VISIBLE);
     }
     //Onloader Reset
     @Override
