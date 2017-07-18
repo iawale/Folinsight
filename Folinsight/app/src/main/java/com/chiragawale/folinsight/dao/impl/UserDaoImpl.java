@@ -64,44 +64,44 @@ public class UserDaoImpl implements UserDao {
         double totalPosts = GlobalVar.mediaDao.getTotalPosts();
         Details_ig data = new Details_ig(
                 "Posts",
-                totalPosts / GlobalVar.mediaDao.getTotalLikes(),
-                totalPosts / GlobalVar.mediaDao.getTotalComments());
+                GlobalVar.mediaDao.getTotalLikes() / totalPosts,
+                GlobalVar.mediaDao.getTotalComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
                 "Follower",
-                totalPosts / (GlobalVar.mediaDao.getFanLikes() + GlobalVar.mediaDao.getMutualLikes()),
-                totalPosts / (GlobalVar.mediaDao.getFanComments() + GlobalVar.mediaDao.getMutualComments()));
+                (GlobalVar.mediaDao.getFanLikes() + GlobalVar.mediaDao.getMutualLikes()) / totalPosts,
+                (GlobalVar.mediaDao.getFanComments() + GlobalVar.mediaDao.getMutualComments()) / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
                 "Mutual",
-                totalPosts / GlobalVar.mediaDao.getMutualLikes(),
-                totalPosts / GlobalVar.mediaDao.getMutualComments());
+                GlobalVar.mediaDao.getMutualLikes() / totalPosts,
+                GlobalVar.mediaDao.getMutualComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
                 "Fans",
-                totalPosts / GlobalVar.mediaDao.getFanLikes(),
-                totalPosts / GlobalVar.mediaDao.getFanComments());
+                GlobalVar.mediaDao.getFanLikes() / totalPosts,
+                GlobalVar.mediaDao.getFanComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
                 "Follows",
-                totalPosts / GlobalVar.mediaDao.getFollowsLikes(),
-                totalPosts / GlobalVar.mediaDao.getFollowsComments());
+                GlobalVar.mediaDao.getFollowsLikes() / totalPosts,
+                GlobalVar.mediaDao.getFollowsComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
                 "Posts",
-                totalPosts / (GlobalVar.mediaDao.getTotalLikes() - (
+                (GlobalVar.mediaDao.getTotalLikes() - (
                         GlobalVar.mediaDao.getFanLikes()
                                 + GlobalVar.mediaDao.getFollowsLikes()
-                                + GlobalVar.mediaDao.getMutualLikes())),
-                totalPosts / (GlobalVar.mediaDao.getTotalComments() - (
+                                + GlobalVar.mediaDao.getMutualLikes())) / totalPosts,
+                (GlobalVar.mediaDao.getTotalComments() - (
                         GlobalVar.mediaDao.getFollowsComments()
                                 + GlobalVar.mediaDao.getMutualComments()
-                                + GlobalVar.mediaDao.getFanComments())));
+                                + GlobalVar.mediaDao.getFanComments())) / totalPosts);
         dataList.add(data);
 
     }

@@ -40,7 +40,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         //Getting the current item
         Details_ig currentItem = getItem(position);
         //Setting up the data for views
-        heading_textView.setText(currentItem.getDataFor());
+        heading_textView.setText("For "+currentItem.getDataFor()+":");
         average_likes_text_view.setText(currentItem.getaLikesPer()+"");
         average_comments_text_view.setText(currentItem.getaCommentsPer()+"");
 

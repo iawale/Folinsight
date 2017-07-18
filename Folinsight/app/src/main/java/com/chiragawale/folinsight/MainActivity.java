@@ -90,13 +90,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 //Kicks Off the Loader
                 getLoaderManager().restartLoader(0,null,this);
                 Log.e("Refresh", "====================================================");
-                //Check for error
-                if(GlobalVar.error429){
-                    Toast.makeText(this, "Too many requests to Api in an hour, please try again in the next hour", Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(this, "Load complete", Toast.LENGTH_SHORT).show();
-                }
-
                 return true;
         }
         return false;
@@ -113,6 +106,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //when loader finishes loading
     @Override
     public void onLoadFinished(android.content.Loader<List<Users>> loader, List<Users> data) {
+        //Check for error
+        if(GlobalVar.error429){
+            Toast.makeText(this, "Too many requests to Api in an hour, please try again in the next hour", Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this, "Load complete", Toast.LENGTH_SHORT).show();
+        }
         //Set up lists with fresh data
         GlobalVar.userDao.setUpUserLists(data);
         // Set total follower mutual and follows values
