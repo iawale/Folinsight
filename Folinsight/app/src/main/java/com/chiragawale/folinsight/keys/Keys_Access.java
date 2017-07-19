@@ -1,4 +1,4 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.keys;
 
 /**
  * Created by chira on 7/9/2017.

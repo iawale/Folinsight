@@ -4,7 +4,6 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
 
@@ -18,13 +17,15 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.chiragawale.folinsight.adapter.SimpleFragmentPagerAdapter;
 import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.fragment.OverviewFragment;
+import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.loader.UserLoader;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Users>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Users>>  {
     ProgressBar progressBar;
     FloatingActionButton fab,fab_insight;
     @Override
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (item.getItemId()) {
             case R.id.logout:
                 Log.e("Logout", "=========================================================");
+                GlobalVar.USER_ID = 0;
                 getLoaderManager().destroyLoader(0);
                 GlobalVar.userDao.clearUserList();
                 GlobalVar.mediaDao.resetValues();

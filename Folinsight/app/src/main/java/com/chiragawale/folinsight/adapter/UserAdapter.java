@@ -1,4 +1,4 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chiragawale.folinsight.R;
 import com.chiragawale.folinsight.entity.Users;
 
 import java.util.List;

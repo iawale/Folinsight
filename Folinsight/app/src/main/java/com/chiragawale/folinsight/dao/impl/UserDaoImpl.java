@@ -1,8 +1,6 @@
 package com.chiragawale.folinsight.dao.impl;
 
-import android.util.Log;
-
-import com.chiragawale.folinsight.GlobalVar;
+import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.dao.UserDao;
 import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.entity.Users;
@@ -96,7 +94,7 @@ public class UserDaoImpl implements UserDao {
         dataList.add(data);
 
         data = new Details_ig(
-                "Posts",
+                "Stranger",
                 (GlobalVar.mediaDao.getTotalLikes() - (
                         GlobalVar.mediaDao.getFanLikes()
                                 + GlobalVar.mediaDao.getFollowsLikes()

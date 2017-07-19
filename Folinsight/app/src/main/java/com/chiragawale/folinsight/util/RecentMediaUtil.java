@@ -1,8 +1,6 @@
 package com.chiragawale.folinsight.util;
 
-import android.util.Log;
-
-import com.chiragawale.folinsight.GlobalVar;
+import com.chiragawale.folinsight.keys.GlobalVar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +54,11 @@ public class RecentMediaUtil extends NetworkUtil {
                 int count_comments = comments.getInt("count");
                 totalComments += count_comments;
                 recentMediaIdList.add(id);
+                //Gets the user id of the owner of access token
+                if(GlobalVar.USER_ID == 0){
+                    JSONObject user = currentMedia.getJSONObject("user");
+                    GlobalVar.USER_ID = user.getInt("id");
+                }
             }
 
             //Storing total likes, comments and posts

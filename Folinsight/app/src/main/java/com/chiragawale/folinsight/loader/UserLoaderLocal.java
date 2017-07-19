@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.chiragawale.folinsight.GlobalVar;
+import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.entity.Users;
 
 import java.util.List;

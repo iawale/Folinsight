@@ -1,4 +1,4 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -11,8 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.chiragawale.folinsight.R;
 import com.chiragawale.folinsight.entity.Details_ig;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,12 +42,34 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         TextView average_likes_text_view = (TextView) listItemView.findViewById(R.id.average_likes_value);
         TextView average_comments_text_view = (TextView) listItemView.findViewById(R.id.average_comments_value);
 
+
         //Getting the current item
         Details_ig currentItem = getItem(position);
         //Setting up the data for views
-        heading_textView.setText("For "+currentItem.getDataFor()+":");
+        heading_textView.setText("Per "+currentItem.getDataFor()+":");
         average_likes_text_view.setText(currentItem.getaLikesPer()+"");
         average_comments_text_view.setText(currentItem.getaCommentsPer()+"");
+
+        /**
+         * Setting up the graphs
+         */
+        GraphView graphView = (GraphView) listItemView.findViewById(R.id.graphView);
+
+        graphView.getViewport().setScalable(true);
+        graphView.getViewport().setScalableY(true);
+
+        ArrayList<DataPoint> list = new ArrayList<>();
+        for (int i = 0; i < 100; i++){
+            list.add(new DataPoint(i,i));
+        }
+
+
+        DataPoint dataPoints []= new DataPoint[list.size()];
+        dataPoints =  list.toArray(dataPoints);
+
+        LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(dataPoints);
+        lineGraphSeries.setDrawDataPoints(true);
+        graphView.addSeries(lineGraphSeries);
 
         return listItemView;
     }

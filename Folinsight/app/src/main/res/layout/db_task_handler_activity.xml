@@ -4,11 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chiragawale.folinsight.DbTaskHandler">
+    tools:context="com.chiragawale.folinsight.DbTaskHandler"
+    android:orientation="vertical">
+
+   <com.jjoe64.graphview.GraphView
+       android:layout_width="match_parent"
+       android:layout_height="200dip"
+       android:id="@+id/graphView"/>
 
    <ListView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/list_insight"/>
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/list_insight"
+       />
 
 </LinearLayout>

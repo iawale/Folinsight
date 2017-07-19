@@ -5,6 +5,9 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.chiragawale.folinsight.keys.GlobalVar;
+import com.chiragawale.folinsight.keys.Keys_Access;
+
 /**
  * Created by chira on 7/10/2017.
  */

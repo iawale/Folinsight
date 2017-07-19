@@ -4,10 +4,8 @@ package com.chiragawale.folinsight.loader;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import android.util.Log;
-
-import com.chiragawale.folinsight.GlobalVar;
-import com.chiragawale.folinsight.Keys_Access;
+import com.chiragawale.folinsight.keys.GlobalVar;
+import com.chiragawale.folinsight.keys.Keys_Access;
 import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.util.CommentDataUtil;
 import com.chiragawale.folinsight.util.UserDataUtil;

@@ -1,21 +1,12 @@
 package com.chiragawale.folinsight;
 
-import android.content.Intent;
-
 import android.support.v7.app.AppCompatActivity;
 
-import android.net.Uri;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import java.util.concurrent.Callable;
+import com.chiragawale.folinsight.keys.GlobalVar;
+import com.chiragawale.folinsight.keys.Keys_Access;
 
 
 /**

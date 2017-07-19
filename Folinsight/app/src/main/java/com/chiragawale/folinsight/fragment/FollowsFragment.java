@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.chiragawale.folinsight.GlobalVar;
-import com.chiragawale.folinsight.Keys_Access;
+import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.R;
-import com.chiragawale.folinsight.UserAdapter;
+import com.chiragawale.folinsight.adapter.UserAdapter;
 import com.chiragawale.folinsight.entity.Users;
-import com.chiragawale.folinsight.loader.UserLoader;
 import com.chiragawale.folinsight.loader.UserLoaderLocal;
 
 import java.util.ArrayList;

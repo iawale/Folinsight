@@ -59,5 +59,16 @@
                 android:padding="10dp"
                 tools:text="N/A"/>
         </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/headings"
+        android:text="History"
+        android:padding="10dp"/>
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graphView"/>
 
     </LinearLayout>

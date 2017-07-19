@@ -1,4 +1,4 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.chiragawale.folinsight.R;
 import com.chiragawale.folinsight.data.InsightContract;
+import com.jjoe64.graphview.GraphView;
 
 /**
  * Created by chira on 7/18/2017.
@@ -31,6 +33,7 @@ public class InsightCursorAdapter extends CursorAdapter {
         TextView likesTextView = (TextView) view.findViewById(R.id.total_likes_value);
         TextView commentsTextView = (TextView) view.findViewById(R.id.total_comments_value);
         TextView postsTextView = (TextView) view.findViewById(R.id.total_posts_value);
+
 
 
 

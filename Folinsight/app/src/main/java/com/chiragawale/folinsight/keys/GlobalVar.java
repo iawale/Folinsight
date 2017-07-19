@@ -1,13 +1,12 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.keys;
 
-import android.content.Context;
-import android.support.v4.app.LoaderManager;
 import android.webkit.WebView;
 
 import com.chiragawale.folinsight.dao.MediaDao;
 import com.chiragawale.folinsight.dao.UserDao;
 import com.chiragawale.folinsight.dao.impl.MediaDaoImpl;
 import com.chiragawale.folinsight.dao.impl.UserDaoImpl;
+import com.chiragawale.folinsight.keys.Keys_Access;
 
 /**
  * Created by chira on 7/13/2017.
@@ -16,7 +15,7 @@ import com.chiragawale.folinsight.dao.impl.UserDaoImpl;
 public class GlobalVar {
     //For checking error response code 429
     public static boolean error429;
-
+    public static int USER_ID = 0;
 
     //Controls data storing
     public static final UserDao userDao = new UserDaoImpl();

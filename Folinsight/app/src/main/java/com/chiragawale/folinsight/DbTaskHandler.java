@@ -14,51 +14,60 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.chiragawale.folinsight.adapter.InsightCursorAdapter;
 import com.chiragawale.folinsight.data.InsightContract;
+import com.chiragawale.folinsight.keys.GlobalVar;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class DbTaskHandler extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
-    private String [] projection = {};
+import java.util.ArrayList;
+
+public class DbTaskHandler extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    private String[] projection = {};
     private InsightCursorAdapter mInsightCursorAdaptor;
+    private Cursor cursor = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Db");
         setContentView(R.layout.db_task_handler_activity);
-        mInsightCursorAdaptor = new InsightCursorAdapter(this,null);
+        mInsightCursorAdaptor = new InsightCursorAdapter(this, null);
         //Finding the list view
         ListView listView = (ListView) findViewById(R.id.list_insight);
-        listView.setAdapter(mInsightCursorAdaptor);
+        //listView.setAdapter(mInsightCursorAdaptor);
         //Inserting data into database
         insert();
         //Kick off the loader
         getLoaderManager().initLoader(0,null,this);
 
+
+
     }
 
-    public  void insert() {
+    public void insert() {
 
-            //Setting up the insert statement
-            ContentValues values = new ContentValues();
-            values.put(InsightContract.InsightEntry.USER_ID,2314);
-            values.put(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES, GlobalVar.mediaDao.getTotalLikes() );
-            values.put(InsightContract.InsightEntry.COLUMN_TOTAL_COMMENTS, GlobalVar.mediaDao.getTotalComments());
-            values.put(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS, GlobalVar.mediaDao.getTotalPosts());
-            values.put(InsightContract.InsightEntry.COLUMN_FAN_COUNT, GlobalVar.mediaDao.getFansCount());
-            values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_COUNT, GlobalVar.mediaDao.getMutualCount());
-            values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_COUNT, GlobalVar.mediaDao.getFollowsCount());
-            values.put(InsightContract.InsightEntry.COLUMN_FAN_L_COUNT,GlobalVar.mediaDao.getFanLikes());
-            values.put(InsightContract.InsightEntry.COLUMN_FAN_C_COUNT, GlobalVar.mediaDao.getFanComments());
-            values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_L_COUNT, GlobalVar.mediaDao.getMutualLikes());
-            values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT, GlobalVar.mediaDao.getMutualComments());
-            values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT,GlobalVar.mediaDao.getFollowsLikes());
-            values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT, GlobalVar.mediaDao.getFollowsComments());
-            values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, "23 Feb");
-            Uri uri = getContentResolver().insert(InsightContract.InsightEntry.CONTENT_URI, values);
-            if (uri != null) {
-                Toast.makeText(this, "Insert successful", Toast.LENGTH_SHORT).show();
-            }
-
+        //Setting up the insert statement
+        ContentValues values = new ContentValues();
+        values.put(InsightContract.InsightEntry.USER_ID, GlobalVar.USER_ID);
+        values.put(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES, GlobalVar.mediaDao.getTotalLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_TOTAL_COMMENTS, GlobalVar.mediaDao.getTotalComments());
+        values.put(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS, GlobalVar.mediaDao.getTotalPosts());
+        values.put(InsightContract.InsightEntry.COLUMN_FAN_COUNT, GlobalVar.mediaDao.getFansCount());
+        values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_COUNT, GlobalVar.mediaDao.getMutualCount());
+        values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_COUNT, GlobalVar.mediaDao.getFollowsCount());
+        values.put(InsightContract.InsightEntry.COLUMN_FAN_L_COUNT, GlobalVar.mediaDao.getFanLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_FAN_C_COUNT, GlobalVar.mediaDao.getFanComments());
+        values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_L_COUNT, GlobalVar.mediaDao.getMutualLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT, GlobalVar.mediaDao.getMutualComments());
+        values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT, GlobalVar.mediaDao.getFollowsLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT, GlobalVar.mediaDao.getFollowsComments());
+        values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, "23 Feb");
+        Uri uri = getContentResolver().insert(InsightContract.InsightEntry.CONTENT_URI, values);
+        if (uri != null) {
+            Toast.makeText(this, "Insert successful", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -66,16 +75,50 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, InsightContract.InsightEntry.CONTENT_URI,projection,null,null,null);
+        return new CursorLoader(this, InsightContract.InsightEntry.CONTENT_URI, projection, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mInsightCursorAdaptor.swapCursor(data);
+        this.cursor = data;
+        extractDataFromCursor();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mInsightCursorAdaptor.swapCursor(null);
+    }
+
+    void extractDataFromCursor() {
+        GraphView graphView = (GraphView) findViewById(R.id.graphView);
+        graphView.getViewport().setScalable(true);
+        graphView.getViewport().setScalableY(true);
+
+        ArrayList<DataPoint> list = new ArrayList<>();
+        if(cursor!=null) {
+            cursor.moveToFirst();
+
+            int i = 0;
+            while (cursor.isAfterLast()==false) {
+                int total_likes = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES));
+                int total_posts = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS));
+                if(total_posts==0){
+                    total_posts++;
+                }
+                double average = (double) total_likes/total_posts;
+                list.add(new DataPoint(i, average));
+                i++;
+                cursor.moveToNext();
+            }
+
+
+            DataPoint dataPoints[] = new DataPoint[list.size()];
+            dataPoints = list.toArray(dataPoints);
+
+            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(dataPoints);
+            lineGraphSeries.setDrawDataPoints(true);
+            graphView.addSeries(lineGraphSeries);
+            cursor.close();
+        }
     }
 }

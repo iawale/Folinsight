@@ -47,7 +47,7 @@
         android:layout_alignParentRight="true"
         android:layout_above="@id/fab"
         android:layout_margin="20dp"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
 

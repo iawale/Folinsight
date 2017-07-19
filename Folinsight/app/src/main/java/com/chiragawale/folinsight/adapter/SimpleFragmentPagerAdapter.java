@@ -1,4 +1,4 @@
-package com.chiragawale.folinsight;
+package com.chiragawale.folinsight.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

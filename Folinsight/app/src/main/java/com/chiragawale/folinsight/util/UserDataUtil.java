@@ -1,8 +1,6 @@
 package com.chiragawale.folinsight.util;
 
-import android.util.Log;
-
-import com.chiragawale.folinsight.GlobalVar;
+import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.entity.Users;
 
 import org.json.JSONArray;
