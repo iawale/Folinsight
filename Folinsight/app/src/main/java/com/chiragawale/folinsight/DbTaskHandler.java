@@ -14,18 +14,15 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.chiragawale.folinsight.adapter.InsightCursorAdapter;
 import com.chiragawale.folinsight.data.InsightContract;
+import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.keys.GlobalVar;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DbTaskHandler extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private String[] projection = {};
-    private InsightCursorAdapter mInsightCursorAdaptor;
     private Cursor cursor = null;
 
     @Override
@@ -33,15 +30,14 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         super.onCreate(savedInstanceState);
         setTitle("Db");
         setContentView(R.layout.db_task_handler_activity);
-        mInsightCursorAdaptor = new InsightCursorAdapter(this, null);
+
         //Finding the list view
         ListView listView = (ListView) findViewById(R.id.list_insight);
         //listView.setAdapter(mInsightCursorAdaptor);
         //Inserting data into database
         insert();
         //Kick off the loader
-        getLoaderManager().initLoader(0,null,this);
-
+        getLoaderManager().initLoader(0, null, this);
 
 
     }
@@ -68,7 +64,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         if (uri != null) {
             Toast.makeText(this, "Insert successful", Toast.LENGTH_SHORT).show();
         }
-
+        GlobalVar.dataDao.clearLists();
 
     }
 
@@ -86,39 +82,65 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mInsightCursorAdaptor.swapCursor(null);
     }
 
     void extractDataFromCursor() {
-        GraphView graphView = (GraphView) findViewById(R.id.graphView);
-        graphView.getViewport().setScalable(true);
-        graphView.getViewport().setScalableY(true);
+        List<Details_ig> followsDataList = new ArrayList<>();
+        List<Details_ig> strangerDataList = new ArrayList<>();
+        List<Details_ig> followerDataList = new ArrayList<>();
+        List<Details_ig> fanDataList = new ArrayList<>();
+        List<Details_ig> mutualDataList = new ArrayList<>();
+        List<Details_ig> postDataList = new ArrayList<>();
 
-        ArrayList<DataPoint> list = new ArrayList<>();
-        if(cursor!=null) {
+
+        if (cursor != null) {
             cursor.moveToFirst();
 
-            int i = 0;
-            while (cursor.isAfterLast()==false) {
-                int total_likes = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES));
+            while (cursor.isAfterLast() == false) {
                 int total_posts = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS));
-                if(total_posts==0){
+                int total_likes = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES));
+                int total_comments = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_COMMENTS));
+                int follows_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT));
+                int follows_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT));
+                int fan_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FAN_L_COUNT));
+                int fan_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FAN_C_COUNT));
+                int mutual_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_MUTUAL_L_COUNT));
+                int mutual_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT));
+                int follower_l_count = mutual_l_count + fan_l_count;
+                int follower_c_count = mutual_c_count + fan_c_count;
+                int stranger_l_count = total_likes - (follower_l_count + follows_l_count);
+                int stranger_c_count = total_comments - (follower_c_count + follows_c_count);
+
+                if (total_posts == 0) {
                     total_posts++;
                 }
-                double average = (double) total_likes/total_posts;
-                list.add(new DataPoint(i, average));
-                i++;
+
+                Details_ig data_object;
+                data_object = new Details_ig(GlobalVar.POSTS_CODE,(double) total_likes/total_posts,(double) total_comments/total_posts);
+                postDataList.add(data_object);
+                data_object = new Details_ig(GlobalVar.FOLLOWER_CODE,(double) follower_l_count/total_posts,(double) follower_c_count/total_posts);
+                followerDataList.add(data_object);
+                data_object = new Details_ig(GlobalVar.FAN_CODE,(double) fan_l_count/total_posts,(double) fan_c_count/total_posts);
+                fanDataList.add(data_object);
+                data_object = new Details_ig(GlobalVar.FOLLOWS_CODE,(double) follows_l_count/total_posts,(double) follows_c_count/total_posts);
+                followsDataList.add(data_object);
+                data_object = new Details_ig(GlobalVar.MUTUAL_CODE,(double) mutual_l_count/total_posts,(double) mutual_c_count/total_posts);
+                mutualDataList.add(data_object);
+                data_object = new Details_ig(GlobalVar.STRANGER_CODE,(double) stranger_l_count/total_posts,(double) stranger_c_count/total_posts);
+                strangerDataList.add(data_object);
                 cursor.moveToNext();
             }
 
-
-            DataPoint dataPoints[] = new DataPoint[list.size()];
-            dataPoints = list.toArray(dataPoints);
-
-            LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(dataPoints);
-            lineGraphSeries.setDrawDataPoints(true);
-            graphView.addSeries(lineGraphSeries);
             cursor.close();
+
+            GlobalVar.dataDao.setFanDataList(fanDataList);
+            GlobalVar.dataDao.setFollowsDataList(followsDataList);
+            GlobalVar.dataDao.setMutualDataList(mutualDataList);
+            GlobalVar.dataDao.setPostDataList(postDataList);
+            GlobalVar.dataDao.setFollowerDataList(followerDataList);
+            GlobalVar.dataDao.setStrangerDataList(strangerDataList);
+
+            finish();
         }
     }
 }

@@ -2,8 +2,10 @@ package com.chiragawale.folinsight.keys;
 
 import android.webkit.WebView;
 
+import com.chiragawale.folinsight.dao.DataDao;
 import com.chiragawale.folinsight.dao.MediaDao;
 import com.chiragawale.folinsight.dao.UserDao;
+import com.chiragawale.folinsight.dao.impl.DataDaoImpl;
 import com.chiragawale.folinsight.dao.impl.MediaDaoImpl;
 import com.chiragawale.folinsight.dao.impl.UserDaoImpl;
 import com.chiragawale.folinsight.keys.Keys_Access;
@@ -13,14 +15,22 @@ import com.chiragawale.folinsight.keys.Keys_Access;
  */
 
 public class GlobalVar {
+    public final static int POSTS_CODE = 100;
+    public final static int FOLLOWER_CODE = 101;
+    public final static int MUTUAL_CODE = 102;
+    public final static int FAN_CODE = 103;
+    public final static int FOLLOWS_CODE = 104;
+    public final static int STRANGER_CODE = 105;
+
     //For checking error response code 429
     public static boolean error429;
+    //User id of the owner of access token
     public static int USER_ID = 0;
 
     //Controls data storing
     public static final UserDao userDao = new UserDaoImpl();
     public static final MediaDao mediaDao = new MediaDaoImpl();
-
+    public static final DataDao dataDao = new DataDaoImpl();
     //For fragment adapter
     public static final int FOLLOWED_BY_FRAGMENT = 0;
     public static final int FOLLOWS_FRAGMENT = 1;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.chiragawale.folinsight.adapter.DetailsAdapter;
 import com.chiragawale.folinsight.keys.GlobalVar;
 
-public class OverviewDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class OverviewDetailActivity extends AppCompatActivity {
     TextView heading_textView,aLikesPer_text_view,aCommetsPer_text_view;
     private DetailsAdapter mDetailsAdapter;
     @Override
@@ -29,18 +29,5 @@ public class OverviewDetailActivity extends AppCompatActivity implements LoaderM
 
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
-    }
 }

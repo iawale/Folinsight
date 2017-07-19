@@ -64,37 +64,37 @@ public class UserDaoImpl implements UserDao {
     public void fillUpDataList() {
         double totalPosts = GlobalVar.mediaDao.getTotalPosts();
         Details_ig data = new Details_ig(
-                "Posts",
+                GlobalVar.POSTS_CODE,
                 GlobalVar.mediaDao.getTotalLikes() / totalPosts,
                 GlobalVar.mediaDao.getTotalComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
-                "Follower",
+                GlobalVar.FOLLOWER_CODE,
                 (GlobalVar.mediaDao.getFanLikes() + GlobalVar.mediaDao.getMutualLikes()) / totalPosts,
                 (GlobalVar.mediaDao.getFanComments() + GlobalVar.mediaDao.getMutualComments()) / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
-                "Mutual",
+                GlobalVar.MUTUAL_CODE,
                 GlobalVar.mediaDao.getMutualLikes() / totalPosts,
                 GlobalVar.mediaDao.getMutualComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
-                "Fans",
+                GlobalVar.FAN_CODE,
                 GlobalVar.mediaDao.getFanLikes() / totalPosts,
                 GlobalVar.mediaDao.getFanComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
-                "Follows",
+                GlobalVar.FOLLOWS_CODE,
                 GlobalVar.mediaDao.getFollowsLikes() / totalPosts,
                 GlobalVar.mediaDao.getFollowsComments() / totalPosts);
         dataList.add(data);
 
         data = new Details_ig(
-                "Stranger",
+                GlobalVar.STRANGER_CODE,
                 (GlobalVar.mediaDao.getTotalLikes() - (
                         GlobalVar.mediaDao.getFanLikes()
                                 + GlobalVar.mediaDao.getFollowsLikes()
