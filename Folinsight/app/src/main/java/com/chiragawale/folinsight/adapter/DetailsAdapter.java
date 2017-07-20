@@ -1,6 +1,7 @@
 package com.chiragawale.folinsight.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,18 @@ import com.chiragawale.folinsight.R;
 import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.keys.GlobalVar;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,7 +72,17 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         dataPoints = likesDataPointList.toArray(dataPoints);
 
         LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(dataPoints);
+        lineGraphSeries.setDrawDataPoints(true);
         graphView.addSeries(lineGraphSeries);
+
+        // set date label formatter
+        graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getContext()));
+        //barGraphView.setHorizontalLabels(new String[]{"1/1/1970", "1/2/1970", "1/3/1970"});
+
+        // as we use dates as labels, the human rounding to nice readable numbers
+        // is not necessary
+        graphView.getGridLabelRenderer().setHumanRounding(false);
+
 
         return listItemView;
     }
@@ -71,46 +90,57 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
 
     List<DataPoint> getDataPointList(Details_ig currentItem) {
         List<DataPoint> likesDataPointsList = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
         int i = 0;
         switch (currentItem.getDataFor_code()) {
             case 100:
                 for (Details_ig current : GlobalVar.dataDao.getPostDataList()) {
-                    likesDataPointsList.add(new DataPoint(i, current.getaLikesPer()));
+                    c.add(Calendar.DATE,i);
+                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
             case 101:
                 for (Details_ig current : GlobalVar.dataDao.getFollowerDataList()) {
-                    likesDataPointsList.add(new DataPoint(i, current.getaLikesPer()));
+                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
             case 102:
                 for (Details_ig current : GlobalVar.dataDao.getMutualDataList()) {
-                    likesDataPointsList.add(new DataPoint(i, current.getaLikesPer()));
+                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
             case 103:
                 for (Details_ig current : GlobalVar.dataDao.getFanDataList()) {
-                    likesDataPointsList.add(new DataPoint(i, current.getaLikesPer()));
+                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
             case 104:
                 for (Details_ig current : GlobalVar.dataDao.getFollowsDataList()) {
-                    likesDataPointsList.add(new DataPoint(i, current.getaLikesPer()));
+                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
             default:
                 for (Details_ig current : GlobalVar.dataDao.getStrangerDataList()) {
-                    likesDataPointsList.add(new DataPoint(i, current.getaLikesPer()));
+                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
 
         }
         return likesDataPointsList;
+    }
+
+    Date getDate(String dateString){
+        Log.e("Date string", dateString + "======================================================");
+       Date date = null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.valueOf(dateString));
+        Log.e("DAte getdate",calendar.getTime().toString());
+        return calendar.getTime();
     }
 }

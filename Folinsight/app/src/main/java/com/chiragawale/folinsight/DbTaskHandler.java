@@ -11,6 +11,7 @@ import android.net.Uri;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,7 +19,10 @@ import com.chiragawale.folinsight.data.InsightContract;
 import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.keys.GlobalVar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DbTaskHandler extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -59,7 +63,9 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT, GlobalVar.mediaDao.getMutualComments());
         values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT, GlobalVar.mediaDao.getFollowsLikes());
         values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT, GlobalVar.mediaDao.getFollowsComments());
-        values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, "23 Feb");
+        Calendar calendar = Calendar.getInstance();
+        String dateString =String.valueOf(calendar.getTimeInMillis());
+        values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, dateString);
         Uri uri = getContentResolver().insert(InsightContract.InsightEntry.CONTENT_URI, values);
         if (uri != null) {
             Toast.makeText(this, "Insert successful", Toast.LENGTH_SHORT).show();
@@ -110,23 +116,35 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
                 int follower_c_count = mutual_c_count + fan_c_count;
                 int stranger_l_count = total_likes - (follower_l_count + follows_l_count);
                 int stranger_c_count = total_comments - (follower_c_count + follows_c_count);
-
+                String dateString = cursor.getString(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_UPDATED_DATE));
+                Log.e("FROM DB", dateString+"+++++++++++++ASDASDSD+ASD+SD+AS+DAS+D+");
                 if (total_posts == 0) {
                     total_posts++;
                 }
 
                 Details_ig data_object;
                 data_object = new Details_ig(GlobalVar.POSTS_CODE,(double) total_likes/total_posts,(double) total_comments/total_posts);
+                data_object.setDate(dateString);
                 postDataList.add(data_object);
+
                 data_object = new Details_ig(GlobalVar.FOLLOWER_CODE,(double) follower_l_count/total_posts,(double) follower_c_count/total_posts);
+                data_object.setDate(dateString);
                 followerDataList.add(data_object);
+
                 data_object = new Details_ig(GlobalVar.FAN_CODE,(double) fan_l_count/total_posts,(double) fan_c_count/total_posts);
+                data_object.setDate(dateString);
                 fanDataList.add(data_object);
+
                 data_object = new Details_ig(GlobalVar.FOLLOWS_CODE,(double) follows_l_count/total_posts,(double) follows_c_count/total_posts);
+                data_object.setDate(dateString);
                 followsDataList.add(data_object);
+
                 data_object = new Details_ig(GlobalVar.MUTUAL_CODE,(double) mutual_l_count/total_posts,(double) mutual_c_count/total_posts);
+                data_object.setDate(dateString);
                 mutualDataList.add(data_object);
+
                 data_object = new Details_ig(GlobalVar.STRANGER_CODE,(double) stranger_l_count/total_posts,(double) stranger_c_count/total_posts);
+                data_object.setDate(dateString);
                 strangerDataList.add(data_object);
                 cursor.moveToNext();
             }
