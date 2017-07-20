@@ -56,6 +56,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<Details_ig> getDataList() {
+        dataList.clear();
         fillUpDataList();
         return dataList;
     }
