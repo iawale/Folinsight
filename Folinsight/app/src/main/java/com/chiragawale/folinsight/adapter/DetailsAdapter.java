@@ -55,7 +55,8 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         GraphView graphView = (GraphView) listItemView.findViewById(R.id.graphView);
         graphView.getViewport().setScalable(true);
         graphView.getViewport().setScalableY(true);
-
+        //Prevents overlapped graphs
+        graphView.removeAllSeries();
         List<DataPoint> likesDataPointList = getDataPointList(currentItem);
 
         DataPoint dataPoints[] = new DataPoint[likesDataPointList.size()];
