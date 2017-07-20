@@ -39,7 +39,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         ListView listView = (ListView) findViewById(R.id.list_insight);
         //listView.setAdapter(mInsightCursorAdaptor);
         //Inserting data into database
-        insert();
+       // insert();
         //Kick off the loader
         getLoaderManager().initLoader(0, null, this);
 

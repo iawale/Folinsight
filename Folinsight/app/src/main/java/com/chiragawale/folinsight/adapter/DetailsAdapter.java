@@ -62,22 +62,38 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
          * Setting up the graphs
          */
         GraphView graphView = (GraphView) listItemView.findViewById(R.id.graphView);
-        graphView.getViewport().setScalable(true);
-        graphView.getViewport().setScalableY(true);
+       
+
         //Prevents overlapped graphs
         graphView.removeAllSeries();
         List<DataPoint> likesDataPointList = getDataPointList(currentItem);
 
+
+        //Converting the List to [] list
         DataPoint dataPoints[] = new DataPoint[likesDataPointList.size()];
         dataPoints = likesDataPointList.toArray(dataPoints);
 
+        //Series for plotting data of likes
         LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(dataPoints);
         lineGraphSeries.setDrawDataPoints(true);
+        lineGraphSeries.setTitle("Likes");
         graphView.addSeries(lineGraphSeries);
+        //Enables scrolling
+//        graphView.getViewport().setXAxisBoundsManual(true);
+//        graphView.getViewport().setMinX(likesDataPointList.get(0).getX());
+//        if(likesDataPointList.size()==2) {
+//            graphView.getViewport().setMaxX(likesDataPointList.get(1).getX());
+//        }else if(likesDataPointList.size()>2) {
+//            graphView.getViewport().setMaxX(likesDataPointList.get(2).getX());
+//        }else{
+//            graphView.getViewport().setMaxX(likesDataPointList.get(0).getX());
+//        }
+
+
 
         // set date label formatter
         graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getContext()));
-        //barGraphView.setHorizontalLabels(new String[]{"1/1/1970", "1/2/1970", "1/3/1970"});
+        graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
 
         // as we use dates as labels, the human rounding to nice readable numbers
         // is not necessary
@@ -87,7 +103,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         return listItemView;
     }
 
-
+    //Gets the list of Datapoints according to the request made by the adapter
     List<DataPoint> getDataPointList(Details_ig currentItem) {
         List<DataPoint> likesDataPointsList = new ArrayList<>();
         Calendar c = Calendar.getInstance();
@@ -134,7 +150,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         }
         return likesDataPointsList;
     }
-
+    //Returns the Date format of timeInMilliSec date
     Date getDate(String dateString){
         Log.e("Date string", dateString + "======================================================");
        Date date = null;
