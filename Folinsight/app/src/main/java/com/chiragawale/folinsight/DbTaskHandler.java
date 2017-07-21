@@ -29,6 +29,7 @@ import java.util.List;
 public class DbTaskHandler extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private String[] projection = {};
     private Cursor cursor = null;
+    private int recordIDDB = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
 
     }
 
-
+    //Inserts a new record
     public void insert() {
 
         //Setting up the insert statement
@@ -75,6 +76,35 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         GlobalVar.dataDao.clearLists();
 
     }
+    //Updates the record
+    public void update() {
+
+        //Setting up the insert statement
+        ContentValues values = new ContentValues();
+        values.put(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES, GlobalVar.mediaDao.getTotalLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_TOTAL_COMMENTS, GlobalVar.mediaDao.getTotalComments());
+        values.put(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS, GlobalVar.mediaDao.getTotalPosts());
+        values.put(InsightContract.InsightEntry.COLUMN_FAN_COUNT, GlobalVar.mediaDao.getFansCount());
+        values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_COUNT, GlobalVar.mediaDao.getMutualCount());
+        values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_COUNT, GlobalVar.mediaDao.getFollowsCount());
+        values.put(InsightContract.InsightEntry.COLUMN_FAN_L_COUNT, GlobalVar.mediaDao.getFanLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_FAN_C_COUNT, GlobalVar.mediaDao.getFanComments());
+        values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_L_COUNT, GlobalVar.mediaDao.getMutualLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT, GlobalVar.mediaDao.getMutualComments());
+        values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT, GlobalVar.mediaDao.getFollowsLikes());
+        values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT, GlobalVar.mediaDao.getFollowsComments());
+//        Calendar calendar = Calendar.getInstance();
+//        String dateString = String.valueOf(calendar.getTimeInMillis());
+//        values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, dateString);
+        String selection = InsightContract.InsightEntry._ID +"=?";
+        String selectionArgs[] = new String [] {String.valueOf(recordIDDB)};
+        int rowsUpdated = getContentResolver().update(InsightContract.InsightEntry.CONTENT_URI, values,selection,selectionArgs);
+        if (rowsUpdated != 0) {
+            Toast.makeText(this, "update successful: "+ rowsUpdated, Toast.LENGTH_SHORT).show();
+        }
+        GlobalVar.dataDao.clearLists();
+
+    }
 
 
     @Override
@@ -87,7 +117,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         this.cursor = data;
 
         if (checkForSameDateEntry()) {
-            //update();
+            update();
             Toast.makeText(this, "Duplicate Entry: True", Toast.LENGTH_SHORT).show();
         } else {
             //insert();
@@ -100,7 +130,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
-
+    //Extracts data from data base and loads into local variables
     void extractDataFromCursor() {
         List<Details_ig> followsDataList = new ArrayList<>();
         List<Details_ig> strangerDataList = new ArrayList<>();
@@ -136,6 +166,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
                     if (total_posts == 0) {
                         total_posts++;
                     }
+                    Log.e("Posts",(double) total_likes / total_posts +"");
 
                     Details_ig data_object;
                     data_object = new Details_ig(GlobalVar.POSTS_CODE, (double) total_likes / total_posts, (double) total_comments / total_posts);
@@ -177,7 +208,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
             finish();
         }
     }
-
+    //Checks if the user already has a record set for the date and returns true if found false if not
     boolean checkForSameDateEntry() {
         int currentYear, currentDay, currentMonth;
         Calendar currentDate = Calendar.getInstance();
@@ -191,6 +222,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
             cursor.moveToFirst();
 
             while (cursor.isAfterLast() == false) {
+                recordIDDB = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry._ID));
                 int recordUserId = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.USER_ID));
                 Log.e("C_USERID", currentUserId + "+=======================================");
                 Log.e("R_USERID", recordUserId + "+=======================================");
@@ -205,9 +237,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
                     if (recordDay == currentDay) {
                         if (recordMonth == currentMonth) {
                             if (recordYear == currentYear) {
-
                                 return true;
-
                             }
                         }
                     }

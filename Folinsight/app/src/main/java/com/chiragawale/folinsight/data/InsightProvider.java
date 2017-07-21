@@ -113,8 +113,7 @@ public class InsightProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         SQLiteDatabase db = mInsightDbHelper.getWritableDatabase();
-        selection = InsightEntry._ID+"=?";
-        selectionArgs = new String [] {String.valueOf(ContentUris.parseId(uri))};
+
         int updateId = db.update(InsightEntry.TABLE_NAME,values,selection,selectionArgs);
         //Setting up change notification configuration to notify of changes
         getContext().getContentResolver().notifyChange(uri,null);
