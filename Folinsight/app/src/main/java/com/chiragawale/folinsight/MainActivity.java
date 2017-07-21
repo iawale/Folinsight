@@ -129,12 +129,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         GlobalVar.mediaDao.setFansCount(GlobalVar.userDao.getFollowedByList().size());
         GlobalVar.mediaDao.setMutualCount(GlobalVar.userDao.getMutualList().size());
         GlobalVar.mediaDao.setFollowsCount(GlobalVar.userDao.getFollowsList().size());
-
+        //Loads the data from data base and inserts most recent data to database
+        Intent intent = new Intent(MainActivity.this,DbTaskHandler.class);
+        startActivity(intent);
 
         OverviewFragment.setValues();
         progressBar.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
-        fab_insight.setVisibility(View.VISIBLE);
+
     }
     //Onloader Reset
     @Override

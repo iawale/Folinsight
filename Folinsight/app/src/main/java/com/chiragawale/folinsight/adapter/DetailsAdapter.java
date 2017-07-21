@@ -61,7 +61,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         //Getting the current item
         Details_ig currentItem = getItem(position);
         //Setting up the data for views
-        heading_textView.setText("Per " + currentItem.getDataFor_code() + ":");
+        heading_textView.setText("Per " + getHeading(currentItem.getDataFor_code()));
         average_likes_text_view.setText(currentItem.getaLikesPer() + "");
         average_comments_text_view.setText(currentItem.getaCommentsPer() + "");
 
@@ -233,5 +233,24 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         calendar.setTimeInMillis(Long.valueOf(dateString));
         Log.e("DAte getdate",calendar.getTime().toString());
         return calendar.getTime();
+    }
+    //Returns string heading according to code sent
+    String getHeading(int code){
+        switch (code){
+            case GlobalVar.POSTS_CODE:
+                return "Post:";
+            case GlobalVar.FAN_CODE:
+                return "Fan:";
+            case GlobalVar.FOLLOWER_CODE:
+                return "Follower: ";
+            case GlobalVar.STRANGER_CODE:
+                return "Stranger";
+            case GlobalVar.MUTUAL_CODE:
+                return "Mutual:";
+            case GlobalVar.FOLLOWS_CODE:
+                return "Follows:";
+            default:
+                return "N/A";
+        }
     }
 }

@@ -37,12 +37,6 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         setTitle("Db");
         setContentView(R.layout.db_task_handler_activity);
 
-        //Finding the list view
-        ListView listView = (ListView) findViewById(R.id.list_insight);
-        //listView.setAdapter(mInsightCursorAdaptor);
-        //Inserting data into database
-        // insert();
-
         //Kick off the loader
         getLoaderManager().initLoader(0, null, this);
 
@@ -70,9 +64,9 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         String dateString = String.valueOf(calendar.getTimeInMillis());
         values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, dateString);
         Uri uri = getContentResolver().insert(InsightContract.InsightEntry.CONTENT_URI, values);
-        if (uri != null) {
-            Toast.makeText(this, "Insert successful", Toast.LENGTH_SHORT).show();
-        }
+//        if (uri != null) {
+//            Toast.makeText(this, "Insert successful", Toast.LENGTH_SHORT).show();
+//        }
         GlobalVar.dataDao.clearLists();
 
     }
@@ -93,14 +87,12 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         values.put(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT, GlobalVar.mediaDao.getMutualComments());
         values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT, GlobalVar.mediaDao.getFollowsLikes());
         values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT, GlobalVar.mediaDao.getFollowsComments());
-//        Calendar calendar = Calendar.getInstance();
-//        String dateString = String.valueOf(calendar.getTimeInMillis());
-//        values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, dateString);
         String selection = InsightContract.InsightEntry._ID +"=?";
         String selectionArgs[] = new String [] {String.valueOf(recordIDDB)};
         int rowsUpdated = getContentResolver().update(InsightContract.InsightEntry.CONTENT_URI, values,selection,selectionArgs);
+
         if (rowsUpdated != 0) {
-            Toast.makeText(this, "update successful: "+ rowsUpdated, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "update successful: "+ rowsUpdated, Toast.LENGTH_SHORT).show();
         }
         GlobalVar.dataDao.clearLists();
 
@@ -118,10 +110,14 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
 
         if (checkForSameDateEntry()) {
             update();
-            Toast.makeText(this, "Duplicate Entry: True", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Duplicate Entry: True", Toast.LENGTH_SHORT).show();
         } else {
-            //insert();
-            Toast.makeText(this, "Duplicate Entry: False", Toast.LENGTH_SHORT).show();
+            if(GlobalVar.USER_ID!=0) {
+                insert();
+              //  Toast.makeText(this, "Duplicate Entry: False", Toast.LENGTH_SHORT).show();
+            }else{
+              //  Toast.makeText(this, "Id 0", Toast.LENGTH_SHORT).show();
+            }
         }
         extractDataFromCursor();
 
@@ -210,6 +206,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
     }
     //Checks if the user already has a record set for the date and returns true if found false if not
     boolean checkForSameDateEntry() {
+        Log.e("check called ", "========================================");
         int currentYear, currentDay, currentMonth;
         Calendar currentDate = Calendar.getInstance();
         currentYear = currentDate.get(Calendar.YEAR);
@@ -222,6 +219,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
             cursor.moveToFirst();
 
             while (cursor.isAfterLast() == false) {
+                Log.e("check loop ", "========================================");
                 recordIDDB = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry._ID));
                 int recordUserId = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.USER_ID));
                 Log.e("C_USERID", currentUserId + "+=======================================");

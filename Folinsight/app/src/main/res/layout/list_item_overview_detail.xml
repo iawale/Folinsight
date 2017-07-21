@@ -62,8 +62,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/headings"
-        android:text="History"
+        android:text="History:"
+        style="@style/subheadings"
+        android:layout_marginLeft="10dp"
         android:padding="10dp"/>
 
     <com.jjoe64.graphview.GraphView
