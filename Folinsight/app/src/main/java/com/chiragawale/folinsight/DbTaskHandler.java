@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DbTaskHandler extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -39,12 +40,12 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         ListView listView = (ListView) findViewById(R.id.list_insight);
         //listView.setAdapter(mInsightCursorAdaptor);
         //Inserting data into database
-       // insert();
+        // insert();
+
         //Kick off the loader
         getLoaderManager().initLoader(0, null, this);
 
     }
-
 
 
     public void insert() {
@@ -65,7 +66,7 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT, GlobalVar.mediaDao.getFollowsLikes());
         values.put(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT, GlobalVar.mediaDao.getFollowsComments());
         Calendar calendar = Calendar.getInstance();
-        String dateString =String.valueOf(calendar.getTimeInMillis());
+        String dateString = String.valueOf(calendar.getTimeInMillis());
         values.put(InsightContract.InsightEntry.COLUMN_UPDATED_DATE, dateString);
         Uri uri = getContentResolver().insert(InsightContract.InsightEntry.CONTENT_URI, values);
         if (uri != null) {
@@ -84,7 +85,16 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         this.cursor = data;
+
+        if (checkForSameDateEntry()) {
+            //update();
+            Toast.makeText(this, "Duplicate Entry: True", Toast.LENGTH_SHORT).show();
+        } else {
+            //insert();
+            Toast.makeText(this, "Duplicate Entry: False", Toast.LENGTH_SHORT).show();
+        }
         extractDataFromCursor();
+
     }
 
     @Override
@@ -99,55 +109,60 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         List<Details_ig> mutualDataList = new ArrayList<>();
         List<Details_ig> postDataList = new ArrayList<>();
 
-
+        int currentUserId = GlobalVar.USER_ID;
         if (cursor != null) {
             cursor.moveToFirst();
 
             while (cursor.isAfterLast() == false) {
-                int total_posts = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS));
-                int total_likes = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES));
-                int total_comments = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_COMMENTS));
-                int follows_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT));
-                int follows_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT));
-                int fan_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FAN_L_COUNT));
-                int fan_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FAN_C_COUNT));
-                int mutual_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_MUTUAL_L_COUNT));
-                int mutual_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT));
-                int follower_l_count = mutual_l_count + fan_l_count;
-                int follower_c_count = mutual_c_count + fan_c_count;
-                int stranger_l_count = total_likes - (follower_l_count + follows_l_count);
-                int stranger_c_count = total_comments - (follower_c_count + follows_c_count);
-                String dateString = cursor.getString(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_UPDATED_DATE));
-                Log.e("FROM DB", dateString+"+++++++++++++ASDASDSD+ASD+SD+AS+DAS+D+");
-                if (total_posts == 0) {
-                    total_posts++;
+                int recordUserId = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.USER_ID));
+                if(currentUserId!=recordUserId){
+                    cursor.moveToNext();
+                }else {
+                    int total_posts = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_POSTS));
+                    int total_likes = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_LIKES));
+                    int total_comments = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_TOTAL_COMMENTS));
+                    int follows_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FOLLOWS_L_COUNT));
+                    int follows_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FOLLOWS_C_COUNT));
+                    int fan_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FAN_L_COUNT));
+                    int fan_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_FAN_C_COUNT));
+                    int mutual_l_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_MUTUAL_L_COUNT));
+                    int mutual_c_count = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_MUTUAL_C_COUNT));
+                    int follower_l_count = mutual_l_count + fan_l_count;
+                    int follower_c_count = mutual_c_count + fan_c_count;
+                    int stranger_l_count = total_likes - (follower_l_count + follows_l_count);
+                    int stranger_c_count = total_comments - (follower_c_count + follows_c_count);
+                    String dateString = cursor.getString(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_UPDATED_DATE));
+                    Log.e("FROM DB", dateString + "+++++++++++++ASDASDSD+ASD+SD+AS+DAS+D+");
+                    if (total_posts == 0) {
+                        total_posts++;
+                    }
+
+                    Details_ig data_object;
+                    data_object = new Details_ig(GlobalVar.POSTS_CODE, (double) total_likes / total_posts, (double) total_comments / total_posts);
+                    data_object.setDate(dateString);
+                    postDataList.add(data_object);
+
+                    data_object = new Details_ig(GlobalVar.FOLLOWER_CODE, (double) follower_l_count / total_posts, (double) follower_c_count / total_posts);
+                    data_object.setDate(dateString);
+                    followerDataList.add(data_object);
+
+                    data_object = new Details_ig(GlobalVar.FAN_CODE, (double) fan_l_count / total_posts, (double) fan_c_count / total_posts);
+                    data_object.setDate(dateString);
+                    fanDataList.add(data_object);
+
+                    data_object = new Details_ig(GlobalVar.FOLLOWS_CODE, (double) follows_l_count / total_posts, (double) follows_c_count / total_posts);
+                    data_object.setDate(dateString);
+                    followsDataList.add(data_object);
+
+                    data_object = new Details_ig(GlobalVar.MUTUAL_CODE, (double) mutual_l_count / total_posts, (double) mutual_c_count / total_posts);
+                    data_object.setDate(dateString);
+                    mutualDataList.add(data_object);
+
+                    data_object = new Details_ig(GlobalVar.STRANGER_CODE, (double) stranger_l_count / total_posts, (double) stranger_c_count / total_posts);
+                    data_object.setDate(dateString);
+                    strangerDataList.add(data_object);
+                    cursor.moveToNext();
                 }
-
-                Details_ig data_object;
-                data_object = new Details_ig(GlobalVar.POSTS_CODE,(double) total_likes/total_posts,(double) total_comments/total_posts);
-                data_object.setDate(dateString);
-                postDataList.add(data_object);
-
-                data_object = new Details_ig(GlobalVar.FOLLOWER_CODE,(double) follower_l_count/total_posts,(double) follower_c_count/total_posts);
-                data_object.setDate(dateString);
-                followerDataList.add(data_object);
-
-                data_object = new Details_ig(GlobalVar.FAN_CODE,(double) fan_l_count/total_posts,(double) fan_c_count/total_posts);
-                data_object.setDate(dateString);
-                fanDataList.add(data_object);
-
-                data_object = new Details_ig(GlobalVar.FOLLOWS_CODE,(double) follows_l_count/total_posts,(double) follows_c_count/total_posts);
-                data_object.setDate(dateString);
-                followsDataList.add(data_object);
-
-                data_object = new Details_ig(GlobalVar.MUTUAL_CODE,(double) mutual_l_count/total_posts,(double) mutual_c_count/total_posts);
-                data_object.setDate(dateString);
-                mutualDataList.add(data_object);
-
-                data_object = new Details_ig(GlobalVar.STRANGER_CODE,(double) stranger_l_count/total_posts,(double) stranger_c_count/total_posts);
-                data_object.setDate(dateString);
-                strangerDataList.add(data_object);
-                cursor.moveToNext();
             }
 
             cursor.close();
@@ -161,5 +176,47 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
 
             finish();
         }
+    }
+
+    boolean checkForSameDateEntry() {
+        int currentYear, currentDay, currentMonth;
+        Calendar currentDate = Calendar.getInstance();
+        currentYear = currentDate.get(Calendar.YEAR);
+        currentMonth = currentDate.get(Calendar.MONTH);
+        currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+        Calendar recordDate = Calendar.getInstance();
+        int currentUserId = GlobalVar.USER_ID;
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            while (cursor.isAfterLast() == false) {
+                int recordUserId = cursor.getInt(cursor.getColumnIndex(InsightContract.InsightEntry.USER_ID));
+                Log.e("C_USERID", currentUserId + "+=======================================");
+                Log.e("R_USERID", recordUserId + "+=======================================");
+                String dateString = cursor.getString(cursor.getColumnIndex(InsightContract.InsightEntry.COLUMN_UPDATED_DATE));
+                Log.e("Current", currentDate.getTime() + "+++++++++++++ASDASDSD+ASD+SD+AS+DAS+D+");
+                recordDate.setTimeInMillis(Long.valueOf(dateString));
+                Log.e("FROM DB", recordDate.getTime().toString() + "+++++++++++++ASDASDSD+ASD+SD+AS+DAS+D+");
+                int recordDay = recordDate.get(Calendar.DAY_OF_MONTH);
+                int recordMonth = recordDate.get(Calendar.MONTH);
+                int recordYear = recordDate.get(Calendar.YEAR);
+                if (currentUserId == recordUserId) {
+                    if (recordDay == currentDay) {
+                        if (recordMonth == currentMonth) {
+                            if (recordYear == currentYear) {
+
+                                return true;
+
+                            }
+                        }
+                    }
+                }
+
+                cursor.moveToNext();
+            }
+
+        }
+        return false;
     }
 }
