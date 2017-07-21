@@ -61,7 +61,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
         //Getting the current item
         Details_ig currentItem = getItem(position);
         //Setting up the data for views
-        heading_textView.setText("Per " + getHeading(currentItem.getDataFor_code()));
+        heading_textView.setText("By " + getHeading(currentItem.getDataFor_code()));
         average_likes_text_view.setText(currentItem.getaLikesPer() + "");
         average_comments_text_view.setText(currentItem.getaCommentsPer() + "");
 
@@ -238,15 +238,15 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
     String getHeading(int code){
         switch (code){
             case GlobalVar.POSTS_CODE:
-                return "Post:";
+                return "Posts:";
             case GlobalVar.FAN_CODE:
-                return "Fan:";
+                return "Fans:";
             case GlobalVar.FOLLOWER_CODE:
-                return "Follower: ";
+                return "Followers: ";
             case GlobalVar.STRANGER_CODE:
-                return "Stranger";
+                return "Strangers";
             case GlobalVar.MUTUAL_CODE:
-                return "Mutual:";
+                return "Mutuals:";
             case GlobalVar.FOLLOWS_CODE:
                 return "Follows:";
             default:
