@@ -43,8 +43,9 @@ public class DbTaskHandler extends AppCompatActivity implements LoaderManager.Lo
         //Kick off the loader
         getLoaderManager().initLoader(0, null, this);
 
-
     }
+
+
 
     public void insert() {
 

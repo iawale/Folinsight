@@ -1,20 +1,27 @@
 package com.chiragawale.folinsight.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chiragawale.folinsight.R;
 import com.chiragawale.folinsight.entity.Details_ig;
 import com.chiragawale.folinsight.keys.GlobalVar;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 
 import java.text.DateFormat;
@@ -62,39 +69,59 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
          * Setting up the graphs
          */
         GraphView graphView = (GraphView) listItemView.findViewById(R.id.graphView);
-       
 
         //Prevents overlapped graphs
         graphView.removeAllSeries();
-        List<DataPoint> likesDataPointList = getDataPointList(currentItem);
+        List<DataPoint> likesDataPointList = getLikesDataPointList(currentItem);
+        List<DataPoint> commentsDataPointList = getCommentsDataPointList(currentItem);
 
+        //Converting the Lists with datapoints to [] list
+        DataPoint likesDataPoints[] = new DataPoint[likesDataPointList.size()];
+        DataPoint commentsDataPoints[] = new DataPoint[commentsDataPointList.size()];
+        likesDataPoints = likesDataPointList.toArray(likesDataPoints);
+        commentsDataPoints = commentsDataPointList.toArray(commentsDataPoints);
 
-        //Converting the List to [] list
-        DataPoint dataPoints[] = new DataPoint[likesDataPointList.size()];
-        dataPoints = likesDataPointList.toArray(dataPoints);
+        //Series for plotting datapoints of likes
+        LineGraphSeries<DataPoint> likesSeries = new LineGraphSeries<>(likesDataPoints);
+        likesSeries.setDrawDataPoints(true);
+        likesSeries.setTitle("Likes");
+        likesSeries.setDrawAsPath(true);
+        likesSeries.setAnimated(true);
+        likesSeries.setDataPointsRadius(10);
+        likesSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                Toast.makeText(getContext(), "Likes: "+ dataPoint.getY(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        //Series for plotting data of likes
-        LineGraphSeries<DataPoint> lineGraphSeries = new LineGraphSeries<>(dataPoints);
-        lineGraphSeries.setDrawDataPoints(true);
-        lineGraphSeries.setTitle("Likes");
-        graphView.addSeries(lineGraphSeries);
-        //Enables scrolling
-//        graphView.getViewport().setXAxisBoundsManual(true);
-//        graphView.getViewport().setMinX(likesDataPointList.get(0).getX());
-//        if(likesDataPointList.size()==2) {
-//            graphView.getViewport().setMaxX(likesDataPointList.get(1).getX());
-//        }else if(likesDataPointList.size()>2) {
-//            graphView.getViewport().setMaxX(likesDataPointList.get(2).getX());
-//        }else{
-//            graphView.getViewport().setMaxX(likesDataPointList.get(0).getX());
-//        }
+        graphView.addSeries(likesSeries);
 
+        //Series for plotting datapoints of comments
+        LineGraphSeries<DataPoint> commentsSeries = new LineGraphSeries<>(commentsDataPoints);
+        commentsSeries.setDrawDataPoints(true);
+        commentsSeries.setTitle("Comments");
+        commentsSeries.setDrawAsPath(true);
+        commentsSeries.setDataPointsRadius(10);
+        commentsSeries.setAnimated(true);
+        commentsSeries.setColor(Color.BLACK);
+        commentsSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                Toast.makeText(getContext(), "Comments: "+dataPoint.getY(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        graphView.addSeries(commentsSeries);
 
-
+        // legend
+        graphView.getLegendRenderer().setVisible(true);
+        graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        //Clear cache
+        graphView.getGridLabelRenderer().invalidate(true,true);
         // set date label formatter
         graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getContext()));
         graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
-
+        graphView.getGridLabelRenderer().setNumVerticalLabels(5);
         // as we use dates as labels, the human rounding to nice readable numbers
         // is not necessary
         graphView.getGridLabelRenderer().setHumanRounding(false);
@@ -104,7 +131,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
     }
 
     //Gets the list of Datapoints according to the request made by the adapter
-    List<DataPoint> getDataPointList(Details_ig currentItem) {
+    List<DataPoint> getLikesDataPointList(Details_ig currentItem) {
         List<DataPoint> likesDataPointsList = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         int i = 0;
@@ -112,7 +139,7 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
             case 100:
                 for (Details_ig current : GlobalVar.dataDao.getPostDataList()) {
                     c.add(Calendar.DATE,i);
-                    likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
+                            likesDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaLikesPer()));
                     i++;
                 }
                 break;
@@ -149,6 +176,54 @@ public class DetailsAdapter extends ArrayAdapter<Details_ig> {
 
         }
         return likesDataPointsList;
+    }
+
+    //Gets the list of Datapoints according to the request made by the adapter
+    List<DataPoint> getCommentsDataPointList(Details_ig currentItem) {
+        List<DataPoint> commentsDataPointsList = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        int i = 0;
+        switch (currentItem.getDataFor_code()) {
+            case 100:
+                for (Details_ig current : GlobalVar.dataDao.getPostDataList()) {
+                    c.add(Calendar.DATE, i);
+                    commentsDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaCommentsPer()));
+                    i++;
+                }
+                break;
+            case 101:
+                for (Details_ig current : GlobalVar.dataDao.getFollowerDataList()) {
+                    commentsDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaCommentsPer()));
+                    i++;
+                }
+                break;
+            case 102:
+                for (Details_ig current : GlobalVar.dataDao.getMutualDataList()) {
+                    commentsDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaCommentsPer()));
+                    i++;
+                }
+                break;
+            case 103:
+                for (Details_ig current : GlobalVar.dataDao.getFanDataList()) {
+                    commentsDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaCommentsPer()));
+                    i++;
+                }
+                break;
+            case 104:
+                for (Details_ig current : GlobalVar.dataDao.getFollowsDataList()) {
+                    commentsDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaCommentsPer()));
+                    i++;
+                }
+                break;
+            default:
+                for (Details_ig current : GlobalVar.dataDao.getStrangerDataList()) {
+                    commentsDataPointsList.add(new DataPoint(getDate(current.getDate()), current.getaCommentsPer()));
+                    i++;
+                }
+                break;
+
+        }
+        return commentsDataPointsList;
     }
     //Returns the Date format of timeInMilliSec date
     Date getDate(String dateString){
