@@ -15,6 +15,8 @@ import com.chiragawale.folinsight.keys.Keys_Access;
  */
 
 public class GlobalVar {
+    public static boolean stateSave = false;
+
     public final static int POSTS_CODE = 100;
     public final static int FOLLOWER_CODE = 101;
     public final static int MUTUAL_CODE = 102;
