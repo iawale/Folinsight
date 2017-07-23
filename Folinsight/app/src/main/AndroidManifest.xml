@@ -32,7 +32,8 @@
             android:authorities="com.chiragawale.folinsight"
             android:exported="false" />
 
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".HelpActivity"></activity>
     </application>
 
 </manifest>

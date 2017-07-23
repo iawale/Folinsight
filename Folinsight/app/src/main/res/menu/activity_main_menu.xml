@@ -10,9 +10,15 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
         app:showAsAction="always" />
+
+    <item android:id="@+id/help"
+        android:title="Help"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/logout"
     android:icon="@drawable/ic_power_settings_new_black_24dp"
     android:title="Logout"
-    app:showAsAction="always"/>
+    app:showAsAction="never"/>
+
 
 </menu>

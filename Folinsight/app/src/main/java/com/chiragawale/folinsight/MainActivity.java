@@ -20,7 +20,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chiragawale.folinsight.adapter.SimpleFragmentPagerAdapter;
@@ -95,8 +97,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
         search_toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
-
     }
 
     @Override
@@ -128,6 +128,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.help:
+                Intent help_intent = new Intent(this,HelpActivity.class);
+                startActivity(help_intent);
+                return true;
             case R.id.logout:
                 Log.e("Logout", "=========================================================");
                 GlobalVar.USER_ID = 0;

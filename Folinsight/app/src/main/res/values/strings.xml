@@ -4,4 +4,8 @@
     <string name="emptyview_title_text">Empty List</string>
     <string name="emptyview_subtitle_text">Data not available yet.</string>
     <string name="sign_in">Sign in with Instagram</string>
+    <string name="search">For Search</string>
+    <string name="download">For Download Data From Instagram</string>
+    <string name="details">For Detail Overview</string>
+
 </resources>
