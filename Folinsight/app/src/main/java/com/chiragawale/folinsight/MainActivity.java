@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.chiragawale.folinsight.adapter.SimpleFragmentPagerAdapter;
 import com.chiragawale.folinsight.entity.Users;
+import com.chiragawale.folinsight.fragment.MutualFragment;
 import com.chiragawale.folinsight.fragment.OverviewFragment;
 import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.loader.UserLoader;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(GlobalVar.stateSave) {
            fab.setVisibility(View.VISIBLE);
         }
-
+        //Getting reference of the search view for handling the interactions
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -95,18 +96,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         search_toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                //
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-                //Do some magic
-            }
-        });
-
 
     }
 
@@ -124,20 +113,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onSaveInstanceState(outState);
     }
 
-//    @Override
-//    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
-//        super.onRestoreInstanceState(savedInstanceState, persistentState);
-//        // Set total follower mutual and follows values
-//        GlobalVar.mediaDao.setFansCount(GlobalVar.userDao.getFollowedByList().size());
-//        GlobalVar.mediaDao.setMutualCount(GlobalVar.userDao.getMutualList().size());
-//        GlobalVar.mediaDao.setFollowsCount(GlobalVar.userDao.getFollowsList().size());
-//        //Loads the data from data base and inserts most recent data to database
-//        Intent intent = new Intent(MainActivity.this,DbTaskHandler.class);
-//        startActivity(intent);
-//
-//        OverviewFragment.setValues();
-//
-//    }
+
 
     //Inflates the menu bar
     @Override
@@ -219,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Intent intent = new Intent(MainActivity.this,DbTaskHandler.class);
         startActivity(intent);
 
+
         OverviewFragment.setValues();
         progressBar.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.VISIBLE);
@@ -231,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.e("Loader r main","==========================================================");
 
     }
+
 
 
 

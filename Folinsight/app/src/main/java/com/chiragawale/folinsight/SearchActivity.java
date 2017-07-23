@@ -18,19 +18,24 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        //Getting data from the Intent for searching
         Intent intent = getIntent();
         Uri query = intent.getData();
 
-
+        //Getting refrence of the progress bar
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
+        //Setting up the adapter
         UserAdapter userAdapter = new UserAdapter(this, GlobalVar.userDao.getSearchResultList(query.toString()));
 
-        //Getting reference for listview
+        //Getting reference for listview and setting it up
         ListView listView = (ListView) findViewById(R.id.follower_list);
         listView.setAdapter(userAdapter);
         View emptyView = findViewById(R.id.empty_view);
         listView.setEmptyView(emptyView);
+        //Changing the text to suit the class
+        TextView subheadingEmptyView = (TextView)  findViewById(R.id.empty_subtitle_text);
+        subheadingEmptyView.setText("No results found");
         progressBar.setVisibility(View.INVISIBLE);
     }
 }

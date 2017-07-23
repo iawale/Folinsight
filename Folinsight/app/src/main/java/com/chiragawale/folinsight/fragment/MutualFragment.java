@@ -89,6 +89,10 @@ public class MutualFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoaderReset(Loader<List<Users>> loader) {
         mUserAdapter.clear();
     }
-
-
+    //Fixes empty list bug
+    @Override
+    public void onResume() {
+        getLoaderManager().restartLoader(FOLLOWER_LOADER_ID,null,this);
+        super.onResume();
+    }
 }
