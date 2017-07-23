@@ -19,6 +19,7 @@ public class UserDaoImpl implements UserDao {
     private List<Users> followedByList = new ArrayList<>();
     private List<Users> mutualList = new ArrayList<>();
     private List<Details_ig> dataList = new ArrayList<>();
+    private List<Users> searchResultList = new ArrayList<>();
 
 
 
@@ -59,6 +60,13 @@ public class UserDaoImpl implements UserDao {
         dataList.clear();
         fillUpDataList();
         return dataList;
+    }
+
+    @Override
+    public List<Users> getSearchResultList(String query) {
+        //Processes the list
+        setUpSearchResultList(query);
+        return searchResultList;
     }
 
     //Calculates averages and stores them for displaying
@@ -148,6 +156,15 @@ public class UserDaoImpl implements UserDao {
                 - GlobalVar.mediaDao.getFollowsComments()
                 - GlobalVar.mediaDao.getMutualComments());
 
+    }
+
+    void setUpSearchResultList(String query){
+        searchResultList.clear();
+        for(Users user: userList){
+            if(user.getUserName().contains(query)){
+                searchResultList.add(user);
+            }
+        }
     }
 
 }

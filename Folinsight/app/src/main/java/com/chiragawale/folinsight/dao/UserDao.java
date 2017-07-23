@@ -17,5 +17,6 @@ public interface UserDao {
     List<Users> getFollowedByList();
     List<Users> getMutualList();
     List<Details_ig> getDataList();
+    List<Users> getSearchResultList(String query);
 
 }
