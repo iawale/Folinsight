@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,12 +28,15 @@ import com.chiragawale.folinsight.entity.Users;
 import com.chiragawale.folinsight.fragment.OverviewFragment;
 import com.chiragawale.folinsight.keys.GlobalVar;
 import com.chiragawale.folinsight.loader.UserLoader;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Users>>  {
     ProgressBar progressBar;
     FloatingActionButton fab;
+    MaterialSearchView searchView;
+    Toolbar search_toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +74,50 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(GlobalVar.stateSave) {
            fab.setVisibility(View.VISIBLE);
         }
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent searchIntent = new Intent(MainActivity.this,SearchActivity.class);
+                Uri query_uri = Uri.parse(query);
+                searchIntent.setData(query_uri);
+                startActivity(searchIntent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+        search_toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
+
+
     }
 
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putAll(outState);
@@ -96,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return super.onCreateOptionsMenu(menu);
     }
 
