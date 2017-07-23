@@ -21,7 +21,7 @@ public class SearchActivity extends AppCompatActivity {
         //Getting data from the Intent for searching
         Intent intent = getIntent();
         Uri query = intent.getData();
-
+        setTitle("Results: ");
         //Getting refrence of the progress bar
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);

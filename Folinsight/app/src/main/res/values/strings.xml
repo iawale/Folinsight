@@ -3,4 +3,5 @@
     <string name="logout">Use Another Account</string>
     <string name="emptyview_title_text">Empty List</string>
     <string name="emptyview_subtitle_text">Data not available yet.</string>
+    <string name="sign_in">Sign in with Instagram</string>
 </resources>
