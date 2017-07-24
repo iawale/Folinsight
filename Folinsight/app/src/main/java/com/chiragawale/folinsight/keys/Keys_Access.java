@@ -1,7 +1,7 @@
 package com.chiragawale.folinsight.keys;
 
 /**
- * Created by chira on 7/9/2017.
+ * Created by chirag on 7/9/2017.
  */
 
 public class Keys_Access {
@@ -26,7 +26,7 @@ public class Keys_Access {
                 "?client_id="+CLIENT_ID+
                 "&redirect_uri="+REDIRECT_URI+
                 "&response_type=token"+
-                "&scope=likes+comments+follower_list";
+                "&scope=follower_list";
     }
 
     public static String getRedirectUri() {

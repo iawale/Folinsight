@@ -43,7 +43,6 @@ public class OverviewFragment extends Fragment {
         fansCount = (TextView) rootView.findViewById(R.id.fans_value);
         followsCount = (TextView) rootView.findViewById(R.id.follows_value);
         mutualCount = (TextView) rootView.findViewById(R.id.mutual_value);
-
         setValues();
         return rootView;
     }
