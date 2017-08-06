@@ -1,1 +1,3 @@
 # Folinsight
+***************This application was built for learning purpose only.****************
+Instagram follower insight app. This application uses Instagram Api to get data on likes/comments of followers, and users that the owner of the access token follows, and stored in Temporary Global Variables which are accessed through interfaces, and data required to plot graphs is also stored in a SQLite database. The application uses Recycler View to display data to the user. It shows number of likes, comments from the follower and follows, and provides graphs by day, and other such details in the form of lists/points.
